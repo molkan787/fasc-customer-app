@@ -26,6 +26,10 @@ export default class vRouter{
             return this.data.current;
         };
 
+        Vue.prototype.$justNavigate = (comp) => {
+            this.justNavigate(comp);
+        };
+
         Vue.prototype.$vRoutes = this.getRoutes;
         Vue.prototype.$vRoutesGroups = this.getRoutesGroups;
     }

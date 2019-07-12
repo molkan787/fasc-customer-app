@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import Starter from '~/logic/starter';
 import DM from '~/struct/dm';
 import { mapState } from 'vuex';
 
@@ -34,10 +33,11 @@ export default {
     methods: {
         loadData(){
             DM.loadAsd()
-            .then(() => {
-                Starter.nextStep('asd');
+            .then(data => {
+                setTimeout(() => this.$starter.nextStep('asd'), 100);
             })
             .catch(err => {
+                console.log(err);
                 this.loading = false;
             })
         },

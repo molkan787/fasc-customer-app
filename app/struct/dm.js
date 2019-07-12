@@ -22,6 +22,9 @@ export default class DM{
         sets.lang = appSettings.getNumber('lang') || 1;
 
         this.alreadyLaunched = appSettings.getBoolean('launched') || false;
+
+        console.log('storeId:', sets.storeId);
+        console.log('alreadyLaunched:', this.alreadyLaunched);
     }
 
     static saveSettings() {
@@ -34,6 +37,8 @@ export default class DM{
 
     static setLaunchedFlag(){
         appSettings.setBoolean('launched', true);
+        this.alreadyLaunched = true;
+        console.log('Launchd flag setted');
     }
 
     // ----------------------------------
@@ -53,8 +58,10 @@ export default class DM{
         try {
             const resp = await dataFetcher.fetch('asd');
             this._cacheAsdData(resp.data);
+            return resp.data;
         } catch (error) {
             console.log('loadAsd Error', error)
+            throw error;
         }
     }
 

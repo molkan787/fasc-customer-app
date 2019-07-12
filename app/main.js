@@ -1,5 +1,6 @@
 import Vue from 'nativescript-vue'
 
+// import WelcomeScreen from './components/pages/WelcomeScreen';
 import MPage from './components/templates/page';
 import Spinner from './components/templates/Spinner';
 import ImagePlaceholder from './components/elements/Placeholder';
@@ -70,9 +71,9 @@ application.android.on(application.AndroidApplication.activityBackPressedEvent, 
   vRouter.goBack();
 });
 
-// New era
+// Starter ++++
 import Starter from './logic/starter';
-Starter.init(store);
+Vue.use(Starter, store);
 
 new Vue({
   store,

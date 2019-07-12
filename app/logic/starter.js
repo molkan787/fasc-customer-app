@@ -8,12 +8,19 @@ import HomePage from '../components/pages/Home';
 
 export default class Starter{
 
+    static install(Vue, store){
+        Vue.prototype.$starter = this;
+        this.init(store);
+    }
+
     static init(context) {
+        console.log('Starter inited!')
         vRouter.addToHistory({ name: 'home', params: null });
         this.state = context.state;
     }
 
     static nextStep(currentStep){
+        console.log('Step:', currentStep);
         if(currentStep == 'asd')
             this.stepAfterAsd();
         else if (currentStep == 'citySelection')
@@ -26,20 +33,26 @@ export default class Starter{
 
     static getFirstPage(){
         if(!DM.alreadyLaunched){
+            console.log('First page: LoadingScreen');
             return LoadingScreen;
-        } else if (!this.state.baseFetchParams.storeId){
+        } else if (!this.state.baseFetchParams.storeId) {
+            console.log('First page: CitySelection');
             return CitySelection;
-        }else{
+        } else {
+            console.log('First page: LoadingScreen');
             return LoadingScreen;
         }
     }
 
     static stepAfterAsd(){
-        if(!DM.alreadyLaunched){
+        if (!DM.alreadyLaunched) {
+            console.log('AfterAsd: WelcomeScreen');
             vRouter.justNavigate(WelcomeScreen);
-        } else if (!this.state.baseFetchParams.storeId){
+        } else if (!this.state.baseFetchParams.storeId) {
+            console.log('AfterAsd: CitySelection');
             vRouter.justNavigate(CitySelection);
-        }else{
+        } else {
+            console.log('AfterAsd: HomePage');
             vRouter.justNavigate(HomePage);
         }
     }

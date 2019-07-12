@@ -25,7 +25,7 @@
                             </StackLayout>
                         </CardView>
 
-                        <SolidButton @tap="continueTap" text="Continue" radius="5"/>
+                        <SolidButton @tap="continueTap" text="Continue" />
                     </StackLayout>
 
                 </GridLayout>
@@ -38,7 +38,6 @@
 const app = require("application");
 const platform = require("platform");
 const color = require("color");
-import Starter from '~/logic/starter';
 import { mapState } from 'vuex';
 
 export default {
@@ -53,12 +52,13 @@ export default {
         text(){
             if(!this.texts) return '';
             return this.texts[this.langId];
-        },
-        continueTap(){
-            Starter.nextStep('welcome');
         }
     },
     methods: {
+        continueTap(){
+            this.$starter.nextStep('welcome');
+        },
+
         langSelected(lang){
             this.lang = lang;
             this.langId = lang == 'en' ? 1 : 2;

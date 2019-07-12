@@ -83,6 +83,7 @@ import { mapState, mapActions } from 'vuex';
 import ActionBarIcon from './ActionBarIcon';
 import SideMenuItem from './SideMenuItem';
 import AccountLogic from '~/logic/account';
+import CitySelection from '../pages/CitySelection';
 
 export default {
     components: {
@@ -161,6 +162,8 @@ export default {
             }else if(route.name == 'share'){
                 const SocialShare = require("nativescript-social-share");
                 SocialShare.shareText(this.shareText);
+            }else if(route.name == 'chnageCity'){
+                this.$justNavigate(CitySelection);
             }
         },
 

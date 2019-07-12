@@ -1,0 +1,1 @@
+keytool -exportcert -alias androiddebugkey -keystore "D:\Archive\Certificates\Fasc\wor_customer.keystore" | "C:\OpenSSL\bin\openssl" sha1 -binary |"C:\OpenSSL\bin\openssl" base64

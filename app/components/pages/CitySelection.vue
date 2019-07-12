@@ -41,7 +41,6 @@
 
 <script>
 import CitiesLogic from '~/logic/cities';
-import Starter from '~/logic/starter';
 import { mapState } from 'vuex';
 
 export default {
@@ -63,7 +62,7 @@ export default {
             const region = this.showRegions ? city.childs[this.regionIndex] : null;
             const regionId = region ? region.city_id : 0;
             if(CitiesLogic.selectStore(city.city_id, regionId)){
-                Starter.nextStep('citySelection');
+                this.$starter.nextStep('citySelection');
             }else{
                 this.errorMsg();
             }
