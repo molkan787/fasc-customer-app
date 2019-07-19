@@ -42,6 +42,7 @@ export default class vRouter{
         }
         const modal = options && options.modal;
         const history = (!options || typeof options.history != 'boolean' || !options.history) && !modal;
+        const animation = (options && options.animation) ? options.animation : 'slideLeft';
         const route = this.routesMap[pageName];
         if (route) {
             this.data.current = pageName;
@@ -59,7 +60,7 @@ export default class vRouter{
             }else{
                 topmost().currentPage.__vuePageRef__.$navigateTo(route.comp, {
                     transition: {
-                        name: 'slideLeft',
+                        name: animation,
                         duration: 250,
                         curve: 'easeInOut'
                     },

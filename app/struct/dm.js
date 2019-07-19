@@ -1,6 +1,9 @@
 import dataFetcher from './dataFetcher';
 import * as appSettings from 'application-settings';
 
+const OK = 'OK';
+const FAIL = 'FAIL';
+
 export default class DM{
 
     static install(Vue){
@@ -8,6 +11,7 @@ export default class DM{
     }
 
     static setup(context){
+        this.searchIdPtr = 1;
         this.context = context;
         this.productsMapped = context.state.productsMapped;
         this.productsList = context.state.productsList;
@@ -56,12 +60,31 @@ export default class DM{
 
     static async loadAsd() {
         try {
-            const resp = await dataFetcher.fetch('asd');
+            const ssi = this.context.state.baseFetchParams.ssi;
+            const query = ssi ? 'asd&ssi=true' : 'asd';
+            const resp = await dataFetcher.fetch(query);
+            this.context.state.baseFetchParams.ssi = false;
             this._cacheAsdData(resp.data);
             return resp.data;
         } catch (error) {
             console.log('loadAsd Error', error)
             throw error;
+        }
+    }
+
+    static scheduleLoadAds(){
+        setTimeout(() => {
+            this.loadAds();
+        }, 1000);
+    }
+
+    static async loadAds(){
+        try {
+            const resp = await dataFetcher.fetch('promos/list');
+            if(resp.status == OK){
+                this.context.state.ads = resp.data.items;
+            }
+        } catch (error) {
         }
     }
 
@@ -71,6 +94,41 @@ export default class DM{
             return resp.data;
         } catch (error) {
             throw 'NET_ERROR';
+        }
+    }
+
+    static async searchProducts(phrase){
+        const searchId = this.searchIdPtr++;
+        this.lastSearchId = searchId;
+        const filters = {
+            name: phrase,
+            start: 0,
+            limit: 0,
+        }
+        const data = await this.getProducts(filters);
+        if(this.lastSearchId == searchId){
+            return data.items;
+        }else{
+            throw 'EXPIRED';
+        }
+    }
+
+    static async setFavoriteState(pid, state) {
+        const query = `cpl/changeFavorite&op=${state ? 'add' : 'rm'}&pid=${pid}`;
+        const resp = await dataFetcher.fetch(query);
+        if (resp.status == 'OK') {
+            return true;
+        } else {
+            throw resp.error_code;
+        }
+    }
+
+    static async loadFavoriteProducts(){
+        const resp = await dataFetcher.fetch('cpl/favorite');
+        if(resp.status == 'OK'){
+            return resp.data.items;
+        }else{
+            throw resp.error_code;
         }
     }
 

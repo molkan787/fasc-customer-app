@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss" scoped>
 $w: 36;
-$pad: 5;
+$pad: 8;
 .root{
     height: $w;
     width: $w;
@@ -41,14 +41,14 @@ $pad: 5;
         margin: $pad 0 0 $pad;
     }
     label{
-        $lw: 18;
+        $lw: 16;
         background-color: red;
         width: $lw;
         height: $lw;
         color: white;
         border-radius: 50%;
         text-align: center;
-        font-size: 13;
+        font-size: 11;
         font-weight: bold;
         // margin: -4 0 0 -4;
     }

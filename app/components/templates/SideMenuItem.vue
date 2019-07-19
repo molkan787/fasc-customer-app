@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/styles/vars.scss';
-$h: 44;
+$h: 40;
 $pad: 10;
 .root{
     height: $h;
@@ -57,7 +57,7 @@ $pad: 10;
     label{
         margin-left: $h - 4;
         margin-top: -2;
-        font-size: 20;
+        font-size: 18;
         color: rgb(77, 77, 77);
     }
 }

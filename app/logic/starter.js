@@ -5,6 +5,7 @@ import CitySelection from '../components/pages/CitySelection';
 import WelcomeScreen from '../components/pages/WelcomeScreen';
 import LoadingScreen from '../components/pages/LoadingScreen';
 import HomePage from '../components/pages/Home';
+import AddAddressPage from '../components/pages/AddAddress';
 
 export default class Starter{
 
@@ -32,6 +33,7 @@ export default class Starter{
     // ---------------------------
 
     static getFirstPage(){
+        return AddAddressPage;
         if(!DM.alreadyLaunched){
             console.log('First page: LoadingScreen');
             return LoadingScreen;

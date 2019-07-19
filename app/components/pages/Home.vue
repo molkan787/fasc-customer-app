@@ -1,8 +1,14 @@
 <template>
-    <page container="stack">
+    <page container="scrollStack">
         <Banners :items="banners" />
         <Categories title="Categories" :items="categories" class="cats cat_con" @itemTapped="catTapped"/>
         <Categories title="Brands" :items="brands" class="cat_con" @itemTapped="catTapped"/>
+        <transition name="fade">
+            <label v-if="ads.length" class="separator"/>
+        </transition>
+        <transition name="fade">
+            <Ads v-if="ads.length" :items="ads" />
+        </transition>
     </page>
 </template>
 
@@ -10,6 +16,7 @@
 import page from '../templates/page';
 import Banners from '../elements/Banners';
 import Categories from '../elements/Categories';
+import Ads from '../elements/Ads';
 import { mapState } from 'vuex';
 import dm from '~/struct/dm';
 
@@ -18,6 +25,7 @@ export default {
         page,
         Banners,
         Categories,
+        Ads,
     },
     data(){
         return {
@@ -38,12 +46,14 @@ export default {
     computed: mapState({
         items: state => state.categories,
         banners: state => state.banners,
+        ads: state => state.ads,
     }),
     watch: {
         items: function () { this.updateItems() }
     },
     mounted(){
         this.updateItems();
+        dm.scheduleLoadAds();
     }
 }
 </script>
@@ -54,5 +64,36 @@ export default {
 }
 .cats{
     margin-bottom: 16;
+}
+
+.fade-enter-active {
+    animation-name: fade-in;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.fade-leave-active {
+    animation-name: fade-in;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+.separator{
+    width: 80%;
+    height: 1;
+    background-color: #e0e0e0;
+    margin: 20 0 20 0;
 }
 </style>

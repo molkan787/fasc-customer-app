@@ -13,6 +13,7 @@ export default new Vuex.Store({
       apiToken: 'key',
       storeId: 0,
       lang: 1,
+      ssi: false,
     },
     cityNames: {},
     customer: null,
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     },
     // =========================================
     banners: [],
+    ads: [],
 
     productsMapped: {},
     productsList: [],

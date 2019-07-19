@@ -11,6 +11,7 @@ export default class Cities{
         console.log(store)
         if(store){
             this.context.state.baseFetchParams.storeId = parseInt(store.store_id);
+            this.context.state.baseFetchParams.ssi = true;
             return true;
         }else{
             return false;

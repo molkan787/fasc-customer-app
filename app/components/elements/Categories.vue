@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$pad: 8;
+$pad: 14;
 .root{
     width: 100%;
     label.title{

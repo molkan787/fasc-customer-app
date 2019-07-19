@@ -5,7 +5,8 @@ import utils from './utils';
 export default class DataFetcher{
 
     static setup(context){
-        this.baseParams = context.state.baseFetchParams;
+        this.context = context;
+        // this.baseParams = context.state.baseFetchParams;
     }
 
     static fetch(path, params){
@@ -31,7 +32,7 @@ export default class DataFetcher{
     }
 
     static buildQueryUrl(path, params){
-        const { sessionId, apiToken, storeId, lang } = this.baseParams;
+        const { sessionId, apiToken, storeId, lang } = this.context.state.baseFetchParams;
         let url = utils.stringFormat(config.apiBaseURL, storeId, apiToken, lang, sessionId);
         url += path;
         url += utils.jsonToGetParams(params);

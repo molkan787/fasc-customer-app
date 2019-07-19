@@ -17,6 +17,7 @@ import OrderOnPhonePage from '../components/pages/OrderOnPhone';
 import OrderOnWhatsappPage from '../components/pages/OrderOnWhatsapp';
 import ContactPage from '../components/pages/Contact';
 import CompanyInfoPage from '../components/pages/CompanyInfo';
+import SearchPage from '../components/pages/Search';
 
 export default class Logic{
 
@@ -103,6 +104,15 @@ export default class Logic{
             text: 'Products',
             icon: 'cart',
             comp: ProductsPage,
+            group: 3,
+            hidden: true,
+        });
+
+        vRouter.addRoute({
+            name: 'search',
+            text: 'Search',
+            icon: 'search',
+            comp: SearchPage,
             group: 3,
             hidden: true,
         });

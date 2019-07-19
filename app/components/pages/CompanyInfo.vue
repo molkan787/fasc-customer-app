@@ -26,6 +26,6 @@ export default {
     text-align: left;
 }
 label{
-    font-size: 19;
+    font-size: 18;
 }
 </style>

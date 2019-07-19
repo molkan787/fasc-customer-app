@@ -40,9 +40,9 @@
                 </StackLayout>
             </ScrollView>
 
-            <ShadowBar width="100%" opacity="0.8" :size="50" verticalAlignment="top"/>
+            <!-- <ShadowBar width="100%" opacity="0.8" :size="50" verticalAlignment="top"/> -->
             <AbsoluteLayout height="50" verticalAlignment="top" padding="5">
-                <ShadowedLabel class="title" :text="title" marginLeft="40" />
+                <!-- <ShadowedLabel class="title" :text="title" marginLeft="40" /> -->
                 <CircleButton size="30" margin="7" @tap="goBack">
                     <Image src="~/assets/icons/arrow_left.png" height="16" margin="7" opacity="0.2"/>
                 </CircleButton>

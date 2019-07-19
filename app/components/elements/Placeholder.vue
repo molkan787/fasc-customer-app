@@ -27,11 +27,12 @@ export default {
     margin-top: -50;
 }
 .img{
-    width: 100;
+    width: 60;
     opacity: 0.4;
 }
 .lbl{
-    font-size: 18;
+    margin-top: 10;
+    font-size: 16;
     color: #999;
 }
 </style>

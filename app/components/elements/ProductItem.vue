@@ -1,6 +1,7 @@
 <template>
     <CardView margin="2" elevation="3" radius="6" width="98%" height="100" class="root" ref="rootPanel" ripple="true" @tap="tapped" >
         <AbsoluteLayout height="100" class="subRoot">
+
             <Image class="picmin" :src="data.image"/>
             <label class="title" :text="data.title"></label>
             <Image v-if="showCartTools" class="removeButton" src="~/assets/icons/close_black.png" @tap="removeButtonTapped"/>
@@ -14,8 +15,10 @@
             <GridLayout rows="auto" columns="*" class="ctrl_con">
                 <label class="priceLabel" :class="discounted ? 'promo' : ''" :text="getFinalPrice() | price" row="0" horizontalAlignment="left"/>
                 <label v-if="discounted" class="oldPriceLabel" :text="data.price | price" row="0" horizontalAlignment="left"/>
+                <Image class="favBtn" :src="`~/assets/icons/star_${data.in_wishlist ? 'filled' : 'outline'}.png`" @tap="fabButtonTappped"  row="0" horizontalAlignment="right"/>
                 <AddToCartButton @tap="tapped2" :quantity="data.quantity" @changed="updateCartCount()" v-model="counts[data.product_id]" class="btn_add"  row="0" horizontalAlignment="right"/>
             </GridLayout>
+
         </AbsoluteLayout>
     </CardView>
 </template>
@@ -24,6 +27,7 @@
 import Helper from '~/logic/helper';
 import AddToCartButton from './AddToCartButton';
 import { mapState, mapActions } from 'vuex';
+import DM from '~/struct/dm';
 export default {
     components: {
         AddToCartButton
@@ -64,6 +68,10 @@ export default {
             this.cancelNextTap = true;
             this.removeItem();
         },
+        fabButtonTappped(){
+            this.cancelNextTap = true;
+            this.toggleFavorite();
+        },
 
         removeItem(){
             this.counts[this.data.product_id] = 0;
@@ -78,6 +86,12 @@ export default {
         },
         getFinalPrice(){
             return Helper.getFinalPrice(this.data);
+        },
+
+        toggleFavorite(){
+            this.data.in_wishlist = !this.data.in_wishlist;
+            DM.setFavoriteState(this.data.product_id, this.data.in_wishlist)
+            .catch(err => console.log('FavoriteLogic.setState:', err));
         }
     },
     created(){
@@ -134,6 +148,14 @@ $pad: 6;
 }
 .btn_add{
     margin-top: 14;
+}
+.favBtn{
+    width: 30;
+    height: 30;
+    margin-top: 14;
+    margin-right: 105;
+    padding: 4;
+    background-color: white;
 }
 .oldPriceLabel{
     font-size: 16;

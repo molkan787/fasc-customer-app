@@ -24,12 +24,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$h: 90;
+$h: 76;
 $lh: 20;
 $pad: 6;
 .root{
-    margin-right: 4;
-    width: 140;
+    margin-right: 8;
+    width: 120;
     height: $h;
     padding: $pad;
     border-width: 1;

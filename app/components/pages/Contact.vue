@@ -1,6 +1,6 @@
 <template>
     <MPage title="Contact Us">
-        <GridLayout height="100%" width="100%" class="root">
+        <GridLayout height="100%" width="100%" class="root" scaleX="0.9" scaleY="0.9">
             <StackLayout width="100%" verticalAlignment="center" class="stack">
                 <Image src="~/assets/icons/location.png" class="icon"/>
                 <label class="header" :text="`(${contactInfo.name})\n${contactInfo.address}`" textWrap="true"/>

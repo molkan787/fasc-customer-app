@@ -13,14 +13,14 @@
 
                         <Spinner v-if="loading"/>
                         <template v-else>
-                            <StackLayout class="form_field">
+                            <StackLayout class="form_field" scaleX="0.9" scaleY="0.9">
                                 <label class="title" text="City"/>
                                 <CardView elevation="2" class="field_input">
                                     <DropDown class="dropdown" :items="_cities" :selectedIndex="cityIndex" 
                                     @selectedIndexChange="cityIndexChanged" hint="Select city" ref="city" borderRadius="6" />
                                 </CardView>
                             </StackLayout>
-                            <StackLayout class="form_field" :width="showRegions ? '60%' : '0'">
+                            <StackLayout class="form_field" :width="showRegions ? '60%' : '0'" scaleX="0.9" scaleY="0.9">
                                 <label class="title" text="Region"/>
                                 <CardView elevation="2" class="field_input">
                                     <DropDown class="dropdown" :items="_regions" :selectedIndex="regionIndex" 

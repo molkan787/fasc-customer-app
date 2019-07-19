@@ -42,16 +42,18 @@
 
             <AbsoluteLayout ~mainContent width="100%" height="100%">
                 <DockLayout width="100%" height="100%" stretchLastChild="true">
+
                     <DockLayout v-if="actionBar" class="actionBar" height="50" dock="top" stretchLastChild="true">
                         <Image dock="left" class="menuIcon" :src="backButton ? '~/assets/icons/arrow-back.png' : '~/assets/icons/hamburg.png'" @tap="actionBarMainIconClick" />
                         <Label dock="center" class="title" :text="title"/>
                         
                         <StackLayout dock="right" class="actionBarIcons" orientation="horizontal" horizontalAlignment="right">
-                            <ActionBarIcon icon="~/assets/icons/search.png" :count="0" />
+                            <ActionBarIcon icon="~/assets/icons/search.png" :count="0" @tap="searchIconTap"/>
                             <ActionBarIcon icon="~/assets/icons/cart.png" :count="cartCount" @tap="cartIconClick" />
                         </StackLayout>
 
                     </DockLayout>
+
                     <AbsoluteLayout v-if="container == 'absolute'" class="pages" dock="bottom">
                         <slot></slot>
                     </AbsoluteLayout>
@@ -127,6 +129,9 @@ export default {
         cartIconClick(){
             this.$goTo('cart');
         },
+        searchIconTap(){
+            this.$goTo('search', null, { animation: 'slideTop' });
+        },
         actionBarMainIconClick(){
             if(this.backButton){
                 this.$goBack();
@@ -185,20 +190,23 @@ export default {
 $iw: 26;
 $pad: 8;
 .actionBar{
+    $ah: 50; 
     width: 100%;
     padding: $pad;
     .title{
         text-align: left;
-        font-size: 18;
+        font-size: 17;
         font-weight: bold;
         background-color: white;
         color: #444;
-        margin-top: 5;
-        margin-left: 20;
+        margin-top: 6;
+        margin-left: 10;
     }
     .menuIcon{
-        width: $iw;
-        height: $iw;
+        width: $ah - $pad;
+        height: $ah - $pad;
+        padding: 8 8 8 0;
+        background-color: white;
     }
 }
 .drawer-header {

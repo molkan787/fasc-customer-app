@@ -1,7 +1,7 @@
 <template>
     <StackLayout class="form_field">
         <label v-if="title" class="title" :text="title"/>
-        <CardView elevation="2" class="field_input">
+        <CardView elevation="2" class="field_input" radius="6">
             <TextField class="input" v-model="pvalue" :editable="!disabled" :hint="hint || title" :keyboardType="keyboard" />
         </CardView>
     </StackLayout>

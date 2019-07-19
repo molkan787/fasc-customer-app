@@ -3,7 +3,7 @@
         <GridLayout height="100%" width="100%" class="root">
             <StackLayout width="100%" verticalAlignment="center" class="stack">
                 <label class="header" text="You can order products by contacting us on WhatsApp" textWrap="true"/>
-                <SubmitButton text="SEND A MESSAGE" radius="6" width="60%" @tap="call"/>
+                <SubmitButton text="SEND A MESSAGE" radius="6" width="60%" @tap="call" scaleX="0.9" scaleY="0.9"/>
             </StackLayout>
         </GridLayout>
     </MPage>
@@ -35,7 +35,7 @@ export default {
     margin-top: -20;
 }
 .header{
-    font-size: 24;
+    font-size: 20;
     color: #666;
     margin-bottom: 30;
 }

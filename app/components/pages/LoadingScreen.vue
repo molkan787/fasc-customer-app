@@ -34,7 +34,7 @@ export default {
         loadData(){
             DM.loadAsd()
             .then(data => {
-                setTimeout(() => this.$starter.nextStep('asd'), 100);
+                setTimeout(() => this.$starter.nextStep('asd'), 1000);
             })
             .catch(err => {
                 console.log(err);

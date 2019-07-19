@@ -1,5 +1,5 @@
 <template>
-    <GridLayout class="root" :height="rootHeight">
+    <GridLayout class="root" :height="rootHeight" width="100%" scaleX="0.95" scaleY="0.95">
             <Carousel height="100%" width="100%" indicatorOffset="0,20"
                 @pageChanged="bannerChanged"
                 indicatorColor="#ffffff" indicatorColorUnselected="#ffffff"
@@ -10,7 +10,7 @@
 
                 <CarouselItem v-for="item in items" :key="item.id" @tap="bannerTaped(item)"
                     :id="`banner${item.id}`" backgroundColor="#00000000" verticalAlignment="middle">
-                    <Image :src="item.image" stretch="aspectFill" class="itemImage"/>
+                    <Image :src="item.image" stretch="fill" class="itemImage"/>
                 </CarouselItem>
 
             </Carousel>
@@ -53,7 +53,7 @@ export default {
         }
     },
     created(){
-        this.rootHeight = this.$getViewSize().width * 0.4;
+        this.rootHeight = (this.$getViewSize().width) * 0.4;
         this.resetSlideTimer();
     }
 }
