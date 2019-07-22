@@ -190,6 +190,7 @@ export default {
 $iw: 26;
 $pad: 8;
 .actionBar{
+    background-color: white;
     $ah: 50; 
     width: 100%;
     padding: $pad;

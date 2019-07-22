@@ -1,11 +1,11 @@
 <template>
-    <MPage title="Add new address" :loading="loading" backButton>
-        <StackLayout padding="10" width="100%">
-            <TextInputField title="Address 1" v-model="form.address_1" ref="address_1"/>
+    <MPage title="Add new address" container="stack" :loading="loading" backButton backgroundColor="#fdfdfd">
+        <Form width="100%" >
+            <TextInputField title="Address 1" v-model="form.address_1" ref="address_1" first/>
             <TextInputField title="Address 2" v-model="form.address_2"/>
-            <TextInputField title="City" v-model="form.city" :disabled="true" />
-            <SubmitButton @tap="addTap" text="Add"/>
-        </StackLayout>
+            <TextInputField title="City" v-model="form.city" :disabled="true" last/>
+        </Form>
+        <SubmitButton @tap="addTap" text="Add"/>
     </MPage>
 </template>
 
@@ -13,12 +13,14 @@
 import TextInputField from '../templates/form/TextInputField';
 import SubmitButton from '../templates/form/SubmitButton';
 import AccountLogic from '~/logic/account';
+import Form from '../templates/form/Form';
 import { mapState } from 'vuex';
 
 export default {
     components: {
         TextInputField,
         SubmitButton,
+        Form
     },
     props: {
         redirect: {
@@ -83,6 +85,7 @@ export default {
     mounted(){
         this.form.city = this.cityNames[this.$langId()];
         this.$refs.address_1.nativeView.focus();
+        
     }
 }
 </script>

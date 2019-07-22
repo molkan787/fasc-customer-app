@@ -17,7 +17,7 @@
                         </Carousel>
                         <Spinner v-if="loading" align backgroundColor="#99ffffff"/>
                     </GridLayout>
-                    <ShadowBar width="100%" opacity="0.1" :size="5"/>
+                    <!-- <ShadowBar width="100%" opacity="0.1" :size="5"/> -->
                     <AddToCartButton class="atcb" shadowSize="5" scaleX="1.2" scaleY="1.2" horizontalAlignment="right"
                         @changed="updateCartCount()" v-model="counts[pid]" :quantity="quantity" />
                     

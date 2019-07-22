@@ -61,8 +61,9 @@ export default {
         margin: 2;
     }
     .cb{
-        margin-top: 10;
-        margin-left: 12;
+        margin-top: 4;
+        margin-bottom: 2;
+        margin-left: 10;
     }
 }
 </style>

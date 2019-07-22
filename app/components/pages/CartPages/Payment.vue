@@ -1,57 +1,55 @@
 <template>
     <AbsoluteLayout width="100%" height="100%">
-        <StackLayout width="100%" height="100%">
+        <!-- <StackLayout width="100%" height="100%">
 
             <StackLayout class="total">
                 <label class="text" text="Total order value"/>
                 <label class="value" :text="total | price"/>
             </StackLayout>
-
-            <StackLayout class="form">
-
-                <StackLayout class="form_field">
-                    <label class="title" text="Delivery address"/>
-                    <label class="field_value" :text="shippingCache.deliveryAddressString"/>
-                </StackLayout>
-
-                <StackLayout class="form_field">
-                    <label class="title" text="Delivery date"/>
-                    <label class="field_value" :text="recap.deliveryDate"/>
-                </StackLayout>
             
-                <StackLayout class="form_field">
-                    <label class="title" text="Delivery time"/>
-                    <label class="field_value" :text="recap.deliveryTime"/>
-                </StackLayout>
+        </StackLayout> -->
 
-                <RadioButtonsGroup title="Payment method" :items="paymentMethods" v-model="paymentMethodIndex" />
+        <Form>
 
-            </StackLayout>
-            
-        </StackLayout>
+            <ValueField title="Total order value" :value="total | price" first />
+            <ValueField title="Delivery address" :value="shippingCache.deliveryAddressString" />
+            <ValueField title="Delivery date" :value="recap.deliveryDate" />
+            <ValueField title="Delivery time" :value="recap.deliveryTime" />
 
-        <GridLayout width="100%" height="100%" padding="10">
-            <Ripple class="button" dock="bottom" verticalAlignment="bottom">
-                <Button @tap="confirmButtonClick" :text="paymentMethodIndex ? 'Checkout' : 'Confirm order'" elevation="0" width="100%" padding="0"/>
-            </Ripple>
+            <FormField title="Payment method" last>
+                <RadioButtonsGroup :items="paymentMethods" v-model="paymentMethodIndex" />
+            </FormField>
+
+        </Form>
+
+        <GridLayout width="100%" height="100%" padding="0 0 12 0">
+            <SubmitButton verticalAlignment="bottom" @tap="confirmButtonClick" :text="paymentMethodIndex ? 'Checkout' : 'Confirm order'" />
         </GridLayout>
 
     </AbsoluteLayout>
 </template>
 
 <script>
+import Form from '../../templates/form/Form';
+import FormField from '../../templates/form/FormField';
+import ValueField from '../../templates/form/ValueField';
+import SubmitButton from '../../templates/form/SubmitButton';
 import RadioButtonsGroup from '../../templates/form/RadioButtonsGroup';
 import { mapState } from 'vuex';
 
 export default {
+    components: {
+        Form,
+        FormField,
+        ValueField,
+        RadioButtonsGroup,
+        SubmitButton,
+    },
     computed: mapState({
         orderData: state => state.cart.order,
         total: state => state.cart.total,
         shippingCache: state => state.pagesCache.cartShipping,
     }),
-    components: {
-        RadioButtonsGroup,
-    },
     data: () => ({
         paymentMethods: [
             'Cash on delivery',

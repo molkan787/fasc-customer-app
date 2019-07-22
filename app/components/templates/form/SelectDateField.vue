@@ -1,6 +1,6 @@
 <template>
     <FormField :first="first" :last="last" :title="title">
-        <label :text="value == null ? hint : value" class="input" :class="value != null ? 'haveValue' : ''"
+        <label :text="value ? value.toLocal() : hint" class="input" :class="value ? 'haveValue' : ''"
             @tap="labelTapped"/>
         <slot></slot>        
     </FormField>
@@ -14,7 +14,7 @@ export default {
     },
     props: {
         value: {
-            type: String,
+            type: Object,
             default: null,
         },
         title: {
@@ -22,7 +22,7 @@ export default {
             default: '',
         },
         hint: {
-            default: '',
+            default: 'Select a date',
         },
         disabled: {
             type: Boolean,
@@ -39,9 +39,13 @@ export default {
     },
     methods: {
         labelTapped(){
-            if(!this.disabled){
-                this.$emit('tap');
-            }
+            if(this.disabled) return;
+
+            this.$selectDate().then(result => {
+                this.$emit('input', result);
+                this.$emit('changed', result);
+            })
+            .catch(err => console.log(err))
         }
     }
     
@@ -49,11 +53,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.field_input{
+    background-color: white;
+    padding: 6 20 6 20;
+    border-width: 0 0 1 0;
+    border-color: #eee;
+}
 .input{
     font-size: 17;
     padding: 6 6 6 0;
     background-color: white;
-    color: #999;
+    color: #888;
     &.haveValue{
         color: #666;
     }

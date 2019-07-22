@@ -5,6 +5,8 @@ import MPage from './components/templates/page';
 import Spinner from './components/templates/Spinner';
 import ImagePlaceholder from './components/elements/Placeholder';
 import ShadowBar from './components/templates/ShadowBar';
+import ShadowPanel from './components/templates/ShadowPanel';
+import Card from './components/templates/Card';
 import CircleButton from './components/templates/CircleButton';
 import SolidButton from './components/templates/SolidButton';
 import Config from './config';
@@ -44,6 +46,8 @@ Vue.registerElement('CheckBox', () => require('nativescript-checkbox').CheckBox,
 Vue.component('MPage', MPage);
 Vue.component('Spinner', Spinner);
 Vue.component('ShadowBar', ShadowBar);
+Vue.component('ShadowPanel', ShadowPanel);
+Vue.component('Card', Card);
 Vue.component('CircleButton', CircleButton);
 Vue.component('SolidButton', SolidButton);
 Vue.component('ImagePlaceholder', ImagePlaceholder);

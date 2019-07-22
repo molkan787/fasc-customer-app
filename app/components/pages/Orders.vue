@@ -3,6 +3,7 @@
         <ScrollView width="100%" height="100%">
             <StackLayout width="100%">
                 <OrderItem v-for="item in items" :key="item.order_id" :data="item" @tap="itemTapped" />
+                <label style="width: 100%; height: 10"/>
             </StackLayout>
         </ScrollView>
         <ImagePlaceholder v-if="items.length == 0 && !loading" image="icons/package.png" text="Nothing to show here"/>

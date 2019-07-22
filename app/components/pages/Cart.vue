@@ -1,10 +1,10 @@
 <template>
-    <MPage title="My Cart" :backButton="true" :loading="loading">
+    <MPage title="My Cart" :backButton="true" :loading="loading" backgroundColor="#fdfdfd">
         <DockLayout stretchLastChild="true" width="100%" height="100%" class="root">
 
             <GridLayout dock="top" class="header" padding="0" height="46" :visibility="currentPageIndex > 2 ? 'collapsed' : 'visible'">
-                <SolidButton class="backButton" width="50%" :text="currentPageIndex ? 'Back' : 'Back to Shopping'" fontSize="19" @tap="backTap"/>
-                <SolidButton class="continueButton" width="50%" text="Continue" fontSize="20" @tap="continueTap" :visibility="currentPageIndex > 1 ? 'collapsed' : 'visible'"/>
+                <SolidButton class="backButton" width="50%" :text="currentPageIndex ? 'Back' : 'Back to Shopping'" fontSize="18" @tap="backTap"/>
+                <SolidButton class="continueButton" width="50%" text="Continue" fontSize="18" @tap="continueTap" :visibility="currentPageIndex > 1 ? 'collapsed' : 'visible'"/>
             </GridLayout>
 
             <AbsoluteLayout dock="top" height="100%" class="pages">
@@ -142,11 +142,7 @@ export default {
                 this.currentPageIndex = 3;
             })
             .catch(err => {
-                alert({
-                    title: 'Cart',
-                    message: 'We could not place yout order, Please try again.',
-                    okButtonText: 'OK',
-                })
+                this.$alert('We could not place your order, Please try again.', 'Card');
                 console.log(err)
             })
             .finally(() => this.loading = false);
@@ -185,8 +181,8 @@ export default {
     background-color: white;
     .total{
         width: 50%;
-        font-size: 22;
-        padding: 7;
+        font-size: 20;
+        padding: 8;
         font-weight: normal;
         text-align: center;
         color: #777;
@@ -199,6 +195,7 @@ export default {
         }
     }
     .clearButton{
+        padding: 8;
         horizontal-alignment: right;
     }
 }

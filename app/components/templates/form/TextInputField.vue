@@ -1,9 +1,7 @@
 <template>
-    <StackLayout class="form_field">
+    <StackLayout class="field_input" :class="first ? 'first' : (last ? 'last' : '')">
         <label v-if="title" class="title" :text="title"/>
-        <CardView elevation="2" class="field_input" radius="6">
-            <TextField class="input" v-model="pvalue" :editable="!disabled" :hint="hint || title" :keyboardType="keyboard" />
-        </CardView>
+        <TextField class="input" v-model="pvalue" :editable="!disabled" :hint="hint || title" :keyboardType="keyboard"/>            
     </StackLayout>
 </template>
 
@@ -27,6 +25,14 @@ export default {
             default: '',
         },
         disabled: {
+            type: Boolean,
+            default: false,
+        },
+        first: {
+            type: Boolean,
+            default: false,
+        },
+        last: {
             type: Boolean,
             default: false,
         }
@@ -61,18 +67,29 @@ export default {
 <style lang="scss" scoped>
 .title{
     font-size: 14;
-    margin-bottom: 4;
+    margin-bottom: 2 2 0 2;
+    color: #d0d0d0;
 }
-.form_field{
-    margin-bottom: 14;
-    padding: 0;
-    .field_input{
-        margin: 2;
-    }
+.field_input{
+    background-color: white;
+    padding: 6 20 6 20;
+    border-width: 0 0 1 0;
+    border-color: #eee;
 }
 .input{
-    font-size: 19;
-    padding: 6;
+    font-size: 17;
+    padding: 6 6 6 0;
     background-color: white;
 }
+$radius: 10;
+.first{
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+}
+.last{
+    border-bottom-left-radius: $radius;
+    border-bottom-right-radius: $radius;
+    border-width: 0;
+}
+
 </style>

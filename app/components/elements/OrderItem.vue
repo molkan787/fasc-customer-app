@@ -1,15 +1,19 @@
 <template>
-    <CardView @tap="tapped" class="root" elevation="2" radius="6" ripple="true" width="96%" height="104" horizontalAlignment="center">
-        <GridLayout rows="30, 30, 30" columns="*, 120" padding="10">
+    <Card @tap="tapped" class="root" :ripple="ripple" width="100%" height="111" contentPadding="6 12 6 12" horizontalAlignment="center">
+        <GridLayout rows="25, 30, 25" columns="*, 120" padding="10 14 10 14">
             <label row="0" col="0" :text="'Order date: ' + orderDate"/>
             <label row="0" col="1" :text="'Order #' + data.order_id" class="orderId"/>
             <label row="1" col="0" :text="'Order value: ' + orderValue"/>
-            <Image row="2" col="0" class="statusIcon" :src="'~/assets/icons/' + statusIcon" horizontalAlignment="left"/>
-            <label row="2" col="0" class="statusText" :color="statusColor" :text="statusText" horizontalAlignment="left"/>
+            <AbsoluteLayout row="2" col="0">
+                <StackLayout orientation="horizontal" class="status" :backgroundColor="statusColor">
+                    <Image class="statusIcon" :src="'~/assets/icons/' + statusIcon" horizontalAlignment="left"/>
+                    <label class="statusText" :text="statusText" horizontalAlignment="left"/>
+                </StackLayout>
+            </AbsoluteLayout>
             <SolidButton row="2" col="1" v-if="cancelButton && data.order_status_id != '7'" text="Cancel order"
-                radius="6" backgroundColor="#ddd" color="#555" fontSize="14" padding="2" height="30" @tap="cancelTapped" />
+                radius="6" backgroundColor="#F66C6C" color="white" fontSize="14" boldText padding="2" height="30" @tap="cancelTapped" />
         </GridLayout>
-    </CardView>
+    </Card>
 </template>
 
 <script>
@@ -22,6 +26,10 @@ export default {
         cancelButton: {
             type: Boolean,
             default: false,
+        },
+        ripple: {
+            type: Boolean,
+            default: true,
         }
     },
     data: () => ({
@@ -54,7 +62,7 @@ export default {
             } else if (status_id == 5) {
                 return 'Completed';
             } else if (status_id == 7) {
-                return 'Cancelled';
+                return 'Canceled';
             }else{
                 return '';
             }
@@ -64,9 +72,9 @@ export default {
             if (status_id == 1) {
                 return 'clock.png';
             } else if (status_id == 5) {
-                return 'checked.png';
+                return 'checked_white.png';
             } else if (status_id == 7) {
-                return 'close_red.png';
+                return 'close_white.png';
             }else{
                 return '';
             }
@@ -74,11 +82,11 @@ export default {
 
         getOrderStatusColor(status_id) {
             if (status_id == 1) {
-                return '#F36F24';
+                return '#fcda68';
             } else if (status_id == 5) {
-                return '#49B747';
+                return '#52C993';
             } else if (status_id == 7) {
-                return '#F44336';
+                return '#F66C6C';
             } else {
                 return '';
             }
@@ -102,7 +110,7 @@ export default {
 <style lang="scss" scoped>
 @import '~/styles/vars';
 .root{
-    margin-top: 8;
+    margin-bottom: -8;
 }
 label{
     color: #444;
@@ -111,11 +119,18 @@ label{
 .orderId{
     text-align: right;
 }
+.status{
+    border-radius: 40;
+    padding: 2 8 2 3;
+}
 .statusText{
-    margin-left: 22;
+    font-size: 15;
+    margin-left: 4;
+    margin-top: -1;
+    color: white;
 }
 .statusIcon{
-    height: 20;
-    margin-top: -7;
+    height: 18;
+    margin-top: 0;
 }
 </style>

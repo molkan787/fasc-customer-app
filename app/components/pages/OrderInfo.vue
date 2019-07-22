@@ -3,19 +3,19 @@
         <ScrollView width="100%" height="100%">
             <StackLayout width="100%">
 
-                <OrderItem :data="data" :cancelButton="data.can_cancel" @cancelTap="cancelTapped" ripple="false" />
-                
-                <CardView class="card" elevation="2" radius="6" width="96%" horizontalAlignment="center">
-                    <GridLayout rows="30, 30, 30" columns="*" width="100%" padding="10">
+                <OrderItem :data="data" :cancelButton="data.can_cancel" @cancelTap="cancelTapped" :ripple="false" />
+
+                <Card horizontalAlignment="center" width="100%" height="115" container="stack" contentPadding="6 12 6 12">
+                    <GridLayout rows="30, 30, 30" columns="*" width="100%" padding="10 14 10 14">
                         <label row="0" col="0" :text="'Delivery date: ' + deliveryDate"/>
                         <label row="1" col="0" :text="'Delivery timing: ' + data.del_timing"/>
                         <label row="2" col="0" :text="'Delivery address: ' + deliveryAddress" textWrap="true"/>
                     </GridLayout>
-                </CardView>
+                </Card>
 
-                <CardView class="card" elevation="2" radius="6" width="96%" horizontalAlignment="center">
+                <Card horizontalAlignment="center" width="100%" height="300" container="stack" contentPadding="6 12 6 12">
                     <ProductsTable :items="data.items" />
-                </CardView>
+                </Card>
 
             </StackLayout>
         </ScrollView>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import Form from '../templates/form/Form';
+import ValueField from '../templates/form/ValueField';
 import ProductsTable from '../elements/ProductsTable';
 import OrderItem from '../elements/OrderItem';
 import OrdersLogic from '~/logic/orders';
@@ -33,6 +35,8 @@ import Helper from '~/logic/helper';
 
 export default {
     components: {
+        Form,
+        ValueField,
         ProductsTable,
         OrderItem,
     },
@@ -102,9 +106,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card{
-    margin-top: 8;
-}
 label{
     color: #444;
     font-size: 16;

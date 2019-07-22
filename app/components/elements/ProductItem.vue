@@ -1,5 +1,5 @@
 <template>
-    <CardView margin="2" elevation="3" radius="6" width="98%" height="100" class="root" ref="rootPanel" ripple="true" @tap="tapped" >
+    <CardView margin="2" elevation="0" radius="6" width="98%" height="100" class="root" ref="rootPanel" ripple="true" @tap="tapped" >
         <AbsoluteLayout height="100" class="subRoot">
 
             <Image class="picmin" :src="data.image"/>

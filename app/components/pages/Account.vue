@@ -1,10 +1,30 @@
 <template>
     <MPage title="My Account">
         <DockLayout width="100%" height="100%" class="root" stretchLastChild="true">
-            <StackLayout dock="top" width="100%" >
-                <label class="header" :text="customerName"/>
-                <ShadowBar size="10" :opacity="0.1"/>
+            <StackLayout dock="top" width="100%" class="header" >
+                <Image src="~/assets/images/generic-user-purple.png"/>
+                <label :text="customerName"/>
             </StackLayout>
+
+            <GridLayout :rows="cardsSizes" :columns="cardsSizes" width="100%" padding="10">
+                <Card row="0" col="0" contentPadding="12" shadowOpacity="0.05" width="100%" innerPadding="25" container="grid" ripple>
+                    <Image class="card_icon" src="~/assets/icons/card_circle.png"/>
+                    <label class="card_text" text="Addresses"/>
+                </Card>
+                <Card row="0" col="1" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
+                    <Image class="card_icon" src="~/assets/icons/heart_cricle.png"/>
+                    <label class="card_text" text="Favorites"/>
+                </Card>
+                <Card row="1" col="0" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
+                    <Image class="card_icon" src="~/assets/icons/help_circle.png"/>
+                    <label class="card_text" text="Support"/>
+                </Card>
+                <Card row="1" col="1" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
+                    <Image class="card_icon" src="~/assets/icons/settings_circle.png"/>
+                    <label class="card_text" text="Settings"/>
+                </Card>
+            </GridLayout>
+
             <DockLayout dock="bottom" width="100%" height="100%" stretchLastChild="true" horizontalAlignment="center">
                 <CardView dock="top" elevation="3" ripple="true" radius="6" class="card" height="90" width="94%" marginTop="7">
                     <StackLayout class="form_field" padding="16">
@@ -67,6 +87,7 @@ export default {
     },
     data: () => ({
         addressesLoading: false,
+        cardsSizes: '',
     }),
     methods: {
         addrDeleteTap(addr){
@@ -108,33 +129,46 @@ export default {
                 cancelButtonText: 'No'
             });
         }
+    },
+    mounted(){
+        const vw = this.$getViewSize().width;
+        const hvw = (vw - 20) / 2;
+        this.cardsSizes = hvw + ',' + hvw;
+        console.log(this.cardsSizes);
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.root{
-    background-color: white;
-}
 .header{
     width: 100%;
-    font-size: 22;
-    color: #666;
     padding: 14;
     text-align: center;
-    background-color: white;
+    Image{
+        width: 25%;
+    }
+    label{
+        font-size: 20;
+        font-weight: bold;
+        color: #333;
+        margin: 10 0 10 0;
+    }
 }
 .title{
     font-size: 16;
     margin-bottom: 4;
 }
-.form_field{
-    padding: 0;
-    .field_value{
-        font-size: 22;
-        margin-bottom: 4;
-        color: #444;
-    }
+.card_icon{
+    width: 45;
+    height: 45;
+    vertical-alignment: top;
+    horizontal-alignment: left;
+}
+.card_text{
+    vertical-alignment: bottom;
+    horizontal-alignment: right;
+    font-size: 15;
+    color: #222;
 }
 </style>
 

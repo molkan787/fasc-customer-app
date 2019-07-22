@@ -1,7 +1,7 @@
 <template>
     <Ripple @tap="tapped">
         <label class="lbl" horizontalAlignment="center" :text="text"
-            :padding="padding" :fontSize="fontSize" :color="color" :class="textAlign"
+            :padding="padding" :fontSize="fontSize" :color="color" :class="textAlign + (boldText ? ' bold' : '')"
             :borderRadius="radius" :backgroundColor="backgroundColor"/>
     </Ripple>
 </template>
@@ -31,6 +31,10 @@ export default {
         textAlign: {
             type: String,
             default: 'center'
+        },
+        boldText: {
+            type: Boolean,
+            default: false,
         }
     },
     methods: {
@@ -41,7 +45,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .left{
     text-align: left;
 }
@@ -53,5 +57,8 @@ export default {
 }
 .lbl{
     width: 100%;
+    &.bold{
+        font-weight: bold;
+    }
 }
 </style>

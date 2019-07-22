@@ -8,8 +8,8 @@ export default class Utils{
 
     static install(Vue){
 
-        Vue.prototype.$alert = (msg) => alert({
-            title: StaticData.get('companyName'),
+        Vue.prototype.$alert = (msg, title) => alert({
+            title: title || StaticData.get('companyName'),
             message: msg,
             okButtonText: 'OK',
         });

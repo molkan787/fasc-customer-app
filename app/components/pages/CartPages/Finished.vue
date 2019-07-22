@@ -8,7 +8,7 @@
         </StackLayout>
 
         <Ripple class="button" verticalAlignment="bottom">
-            <Button text="Home" elevation="0" width="100%" padding="0" @tap="$goTo('home')"/>
+            <Button text="Home" elevation="0" width="100%" padding="0" @tap="$goTo('home')" borderRadius="50"/>
         </Ripple>
 
     </GridLayout>
