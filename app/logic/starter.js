@@ -49,8 +49,8 @@ export default class Starter{
         } else if (!this.state.baseFetchParams.storeId) {
             vRouter.justNavigate(CitySelection);
         } else {
-            vRouter.justNavigate(HomePage);
-            // vRouter.justNavigate(OrdersPage);
+            // vRouter.justNavigate(HomePage);
+            vRouter.justNavigate(OrdersPage);
         }
     }
 

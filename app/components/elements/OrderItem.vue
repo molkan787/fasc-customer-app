@@ -1,10 +1,10 @@
 <template>
-    <Card @tap="tapped" class="root" :ripple="ripple" width="100%" height="111" contentPadding="6 12 6 12" horizontalAlignment="center">
-        <GridLayout rows="25, 30, 25" columns="*, 120" padding="10 14 10 14">
-            <label row="0" col="0" :text="'Order date: ' + orderDate"/>
+    <Card @tap="tapped" class="root" :ripple="ripple" width="100%" :height="cancelButton ? 116 : 88" contentPadding="6 12 6 12" horizontalAlignment="center">
+        <GridLayout rows="30, 30, 24" columns="*, 120" padding="10 14 10 14">
+            <label row="0" col="0" :text="orderDate"/>
             <label row="0" col="1" :text="'Order #' + data.order_id" class="orderId"/>
-            <label row="1" col="0" :text="'Order value: ' + orderValue"/>
-            <AbsoluteLayout row="2" col="0">
+            <label row="1" col="1" :text="orderValue" class="orderTotal"/>
+            <AbsoluteLayout row="1" col="0">
                 <StackLayout orientation="horizontal" class="status" :backgroundColor="statusColor">
                     <Image class="statusIcon" :src="'~/assets/icons/' + statusIcon" horizontalAlignment="left"/>
                     <label class="statusText" :text="statusText" horizontalAlignment="left"/>
@@ -118,6 +118,10 @@ label{
 }
 .orderId{
     text-align: right;
+}
+.orderTotal{
+    text-align: right;
+    color: $primary-color;
 }
 .status{
     border-radius: 40;

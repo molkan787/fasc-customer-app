@@ -34,7 +34,6 @@ Vue.registerElement('CardView', () => require('nativescript-cardview').CardView)
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel);
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement('Ripple', () => require('nativescript-ripple').Ripple);
-Vue.registerElement('ShadowedLabel', () => require('nativescript-shadowed-label').ShadowedLabel);
 Vue.registerElement('DropDown', () => require("nativescript-drop-down/drop-down").DropDown);
 Vue.registerElement('CheckBox', () => require('nativescript-checkbox').CheckBox, {
   model: {
