@@ -49,7 +49,9 @@ export default {
             this.resetSlideTimer();
         },
         bannerTaped(banner){
-            console.log('Page taped:', banner.id)
+            if(banner.link.replace(/\s/g, '')){
+                this.$goTo('customerProductsLost', { ids: banner.link });
+            }
         }
     },
     created(){

@@ -18,6 +18,7 @@ import OrderOnWhatsappPage from '../components/pages/OrderOnWhatsapp';
 import ContactPage from '../components/pages/Contact';
 import CompanyInfoPage from '../components/pages/CompanyInfo';
 import SearchPage from '../components/pages/Search';
+import CustomProductsListPage from '../components/pages/CustomProductsList';
 
 export default class Logic{
 
@@ -113,6 +114,15 @@ export default class Logic{
             text: 'Search',
             icon: 'search',
             comp: SearchPage,
+            group: 3,
+            hidden: true,
+        });
+
+        vRouter.addRoute({
+            name: 'customerProductsLost',
+            text: 'Promotion',
+            icon: 'cart',
+            comp: CustomProductsListPage,
             group: 3,
             hidden: true,
         });

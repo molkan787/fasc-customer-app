@@ -6,24 +6,7 @@
                 <label :text="customerName"/>
             </StackLayout>
 
-            <GridLayout :rows="cardsSizes" :columns="cardsSizes" width="100%" padding="10">
-                <Card row="0" col="0" contentPadding="12" shadowOpacity="0.05" width="100%" innerPadding="25" container="grid" ripple>
-                    <Image class="card_icon" src="~/assets/icons/card_circle.png"/>
-                    <label class="card_text" text="Addresses"/>
-                </Card>
-                <Card row="0" col="1" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
-                    <Image class="card_icon" src="~/assets/icons/heart_cricle.png"/>
-                    <label class="card_text" text="Favorites"/>
-                </Card>
-                <Card row="1" col="0" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
-                    <Image class="card_icon" src="~/assets/icons/help_circle.png"/>
-                    <label class="card_text" text="Support"/>
-                </Card>
-                <Card row="1" col="1" contentPadding="12" shadowOpacity="0.05" innerPadding="25" container="grid" ripple>
-                    <Image class="card_icon" src="~/assets/icons/settings_circle.png"/>
-                    <label class="card_text" text="Settings"/>
-                </Card>
-            </GridLayout>
+            <CardsPager :items="cards"/>
 
             <DockLayout dock="bottom" width="100%" height="100%" stretchLastChild="true" horizontalAlignment="center">
                 <CardView dock="top" elevation="3" ripple="true" radius="6" class="card" height="90" width="94%" marginTop="7">
@@ -61,6 +44,7 @@
 <script>
 import ValueField from '../templates/form/ValueField';
 import FormField from '../templates/form/FormField';
+import CardsPager from '../elements/CardsPager';
 import AddressItem from '../elements/AddressItem';
 import { mapState } from 'vuex';
 import Helper from '~/logic/helper';
@@ -68,6 +52,7 @@ import AccountLogic from '~/logic/account';
 
 export default {
     components: {
+        CardsPager,
         ValueField,
         FormField,
         AddressItem,
@@ -88,6 +73,12 @@ export default {
     data: () => ({
         addressesLoading: false,
         cardsSizes: '',
+        cards: [
+            {icon: 'card_circle', text: 'Addresses'},
+            {icon: 'heart_cricle', text: 'Favorites'},
+            {icon: 'help_circle', text: 'Support'},
+            {icon: 'settings_circle', text: 'Settings'},
+        ]
     }),
     methods: {
         addrDeleteTap(addr){
@@ -131,10 +122,7 @@ export default {
         }
     },
     mounted(){
-        const vw = this.$getViewSize().width;
-        const hvw = (vw - 20) / 2;
-        this.cardsSizes = hvw + ',' + hvw;
-        console.log(this.cardsSizes);
+        
     }
 }
 </script>
@@ -157,18 +145,6 @@ export default {
 .title{
     font-size: 16;
     margin-bottom: 4;
-}
-.card_icon{
-    width: 45;
-    height: 45;
-    vertical-alignment: top;
-    horizontal-alignment: left;
-}
-.card_text{
-    vertical-alignment: bottom;
-    horizontal-alignment: right;
-    font-size: 15;
-    color: #222;
 }
 </style>
 

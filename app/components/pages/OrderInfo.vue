@@ -5,15 +5,21 @@
 
                 <OrderItem :data="data" :cancelButton="data.can_cancel" @cancelTap="cancelTapped" :ripple="false" />
 
-                <Card horizontalAlignment="center" width="100%" height="115" container="stack" contentPadding="6 12 6 12">
-                    <GridLayout rows="30, 30, 30" columns="*" width="100%" padding="10 14 10 14">
-                        <label row="0" col="0" :text="'Delivery date: ' + deliveryDate"/>
-                        <label row="1" col="0" :text="'Delivery timing: ' + data.del_timing"/>
-                        <label row="2" col="0" :text="'Delivery address: ' + deliveryAddress" textWrap="true"/>
+                <Card horizontalAlignment="center" width="100%" height="161" container="stack" contentPadding="6 12 6 12">
+                    <GridLayout rows="30, 52, 52" columns="*" width="100%" padding="10 14 10 14">
+                        <label row="0" col="0" :text="'Delivery date: ' + deliveryDate" textWrap="true"/>
+                        <label row="1" col="0" :text="'Delivery timing:\n' + data.del_timing" textWrap="true"/>
+                        <label row="2" col="0" :text="'Delivery address:\n' + deliveryAddress" textWrap="true"/>
                     </GridLayout>
                 </Card>
 
                 <Card horizontalAlignment="center" width="100%" height="300" container="stack" contentPadding="6 12 6 12">
+                    <GridLayout width="100%" height="40" padding="10 8 0 14">
+                        <label text="Items" horizontalAlignment="left" fontSize="16" />
+                        <SolidButton row="2" col="1" text="Download invoice" horizontalAlignment="right" width="160" height="30"
+                            radius="6" backgroundColor="#F0F0F0" color="#909090" fontSize="14" padding="5 10 5 10" @tap="downloadInvoice" />
+                        <Spinner v-if="downloading" size="24" backgroundColor="#90FFFFFF" horizontalAlignment="right" width="160" height="30" align />
+                    </GridLayout>
                     <ProductsTable :items="data.items" />
                 </Card>
 
@@ -48,6 +54,7 @@ export default {
     data: () => ({
         loading: true,
         loading2: false,
+        downloading: false,
         data: {
             items: [],
         },
@@ -96,6 +103,15 @@ export default {
                     this.loading2 = false;
                 });
             });
+        },
+
+        downloadInvoice(){
+            // this.downloading = true;
+            OrdersLogic.downloadInvoice(this.orderId);
+            // .then(result => {
+            //     this.downloading = false;
+            //     console.log('Download result:', result);
+            // })
         }
     },
 

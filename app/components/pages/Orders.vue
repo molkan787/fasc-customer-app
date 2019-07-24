@@ -31,11 +31,15 @@ export default {
     },
 
     created(){
+        if(!this.$customer()){
+            this.loading = false;
+            return;
+        }
         OrdersLogic.loadOrders().then(orders => {
             this.items = orders;
         })
         .catch(err => {
-            this.$alert('We cound not load yout orders, Please try again.');
+            this.$alert('We cound not load your orders, Please try again.');
         })
         .finally(() => {
             this.loading = false;

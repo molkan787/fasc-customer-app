@@ -15,14 +15,14 @@
                         <template v-else>
                             <StackLayout class="form_field" scaleX="0.9" scaleY="0.9">
                                 <label class="title" text="City"/>
-                                <CardView elevation="2" class="field_input">
+                                <CardView elevation="2" class="field_input" radius="50">
                                     <DropDown class="dropdown" :items="_cities" :selectedIndex="cityIndex" 
                                     @selectedIndexChange="cityIndexChanged" hint="Select city" ref="city" borderRadius="6" />
                                 </CardView>
                             </StackLayout>
                             <StackLayout class="form_field" :width="showRegions ? '60%' : '0'" scaleX="0.9" scaleY="0.9">
                                 <label class="title" text="Region"/>
-                                <CardView elevation="2" class="field_input">
+                                <CardView elevation="2" class="field_input" radius="50">
                                     <DropDown class="dropdown" :items="_regions" :selectedIndex="regionIndex" 
                                     @selectedIndexChange="regionIndexChanged" hint="Select region" ref="region" borderRadius="6" />
                                 </CardView>
@@ -123,7 +123,7 @@ export default {
 <style lang="scss" scoped>
 @import '~/styles/vars';
 .text{
-    font-size: 23;
+    font-size: 20;
     color: #777;
     text-align: center;
 }
@@ -147,8 +147,7 @@ export default {
     }
     .dropdown{
         font-size: 20;
-        padding: 6;
-        border-radius: 6;
+        padding: 6 6 6 12;
         background-color: #f5f5f5;
     }
 }

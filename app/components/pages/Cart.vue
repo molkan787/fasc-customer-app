@@ -2,9 +2,9 @@
     <MPage title="My Cart" :backButton="true" :loading="loading" backgroundColor="#fdfdfd">
         <DockLayout stretchLastChild="true" width="100%" height="100%" class="root">
 
-            <GridLayout dock="top" class="header" padding="0" height="46" :visibility="currentPageIndex > 2 ? 'collapsed' : 'visible'">
-                <SolidButton class="backButton" width="50%" :text="currentPageIndex ? 'Back' : 'Back to Shopping'" fontSize="18" @tap="backTap"/>
-                <SolidButton class="continueButton" width="50%" text="Continue" fontSize="18" @tap="continueTap" :visibility="currentPageIndex > 1 ? 'collapsed' : 'visible'"/>
+            <GridLayout dock="top" class="header" padding="0" height="40" :visibility="currentPageIndex > 2 ? 'collapsed' : 'visible'">
+                <SolidButton class="backButton" width="50%" :text="currentPageIndex ? 'Back' : 'Back to Shopping'" fontSize="17" @tap="backTap"/>
+                <SolidButton class="clearButton" width="50%" text="Clear cart" fontSize="17" @tap="clearTap"  :visibility="currentPageIndex > 0 ? 'collapsed' : 'visible'"/>
             </GridLayout>
 
             <AbsoluteLayout dock="top" height="100%" class="pages">
@@ -27,10 +27,10 @@
                 <ShadowBar size="3" opacity="0.2"/>
 
                 <DockLayout class="footer_par" height="100%" width="100%" :visibility="currentPageIndex > 1 ? 'collapsed' : 'visible'">
-                    <CardView dock="bottom" class="footer" height="46" width="100%" elevation="20">
+                    <CardView dock="bottom" class="footer" height="42" width="100%" elevation="20">
                         <GridLayout width="100%">
-                            <label class="total" :text="'Total: ' + totalAsText" @tap="totalTap" :class="(total > 0 ? 'highlight ' : '') + (currentPageIndex ? 'relax' : '')" />
-                            <SolidButton v-if="currentPageIndex == 0" class="clearButton" text="Clear cart" fontSize="19" width="50%" @tap="clearTap"/>
+                            <label class="total" :text="'Total: ' + totalAsText" @tap="totalTap" :class="{highlight: total}" />
+                            <SolidButton class="continueButton" :visibility="currentPageIndex > 2 ? 'collapsed' : 'visible'" text="Continue" fontSize="17" width="50%" @tap="continueTap"/>
                         </GridLayout>
                     </CardView>
                 </DockLayout>
@@ -88,12 +88,9 @@ export default {
         },
         continueTap(){
             if(this.currentPageIndex == 0 && !this.$customer()){
-                confirm({
-                    title: this.$getStaticData('companyName'),
-                    message: 'Please login or register before placing an order, Do you want to login now?',
-                    okButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                }).then(result => {
+                this.$confirm('Please login or register before placing an order, Do you want to login now?',
+                    this.$getStaticData('companyName'))
+                .then(result => {
                     if(result){
                         this.$goTo('login', {tab: 'login', redirect: {name: 'cart'}})
                     }
@@ -142,8 +139,8 @@ export default {
                 this.currentPageIndex = 3;
             })
             .catch(err => {
-                this.$alert('We could not place your order, Please try again.', 'Card');
-                console.log(err)
+                if(err != 'payment_canceled')
+                    this.$alert('We could not place your order, Please try again.', 'Card');
             })
             .finally(() => this.loading = false);
         }
@@ -165,9 +162,8 @@ export default {
     .backButton{
         horizontal-alignment: left;
     }
-    .continueButton{
+    .clearButton{
         horizontal-alignment: right;
-        color: $primary-color;
     }
 }
 .footer_par{
@@ -181,8 +177,8 @@ export default {
     background-color: white;
     .total{
         width: 50%;
-        font-size: 20;
-        padding: 8;
+        font-size: 17;
+        padding: 10;
         font-weight: normal;
         text-align: center;
         color: #777;
@@ -194,8 +190,10 @@ export default {
             width: 100%;
         }
     }
-    .clearButton{
-        padding: 8;
+    .continueButton{
+        background-color: $primary-color;
+        color: white;
+        padding: 1;
         horizontal-alignment: right;
     }
 }

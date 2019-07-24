@@ -4,7 +4,7 @@
         <StackLayout class="finishedDisplay" verticalAlignment="center">
             <Image class="checkedImage" src="~/assets/icons/checked_orange.png"/>
             <label class="confirmedText" :text="'Your order was successfully placed\nThank you for shopping with us'" textWrap="true" />
-            <label :text="'Order id: ' + orderId" />
+            <label class="confirmedText" :text="'Order id: ' + orderId" />
         </StackLayout>
 
         <Ripple class="button" verticalAlignment="bottom">
@@ -54,7 +54,7 @@ export default {
         color: #888;
         border-width: 1;
         border-radius: 4;
-        font-size: 18;
+        font-size: 15;
     }
 }
 </style>

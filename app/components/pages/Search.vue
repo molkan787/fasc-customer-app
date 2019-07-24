@@ -1,10 +1,14 @@
 <template>
     <MPage :actionBar="false">
         <DockLayout width="100%" height="100%" stretchLastChild="true">
-            <DockLayout dock="top" class="searchBar" stretchLastChild="true">
-                <Image dock="left" class="backButton" src="~/assets/icons/arrow-back.png" @tap="backButtonTap" />
-                <TextField class="searchField" v-model="searchText" hint="type to search"/>
-            </DockLayout>
+            <GridLayout columns="34, *" rows="34" dock="top" class="searchBar" >
+                <Image row="0" col="0" class="backButton" src="~/assets/icons/arrow-back.png" @tap="backButtonTap" />
+                <TextField row="0" col="1" class="searchField" v-model="searchText" hint="type to search" />
+                <GridLayout row="0" col="1" width="34" height="34" horizontalAlignment="right" @tap="voiceSearch">
+                    <Spinner v-if="speechLoading" size="26" horizontalAlignment="center" verticalAlignment="center"/>
+                    <Image v-else src="~/assets/icons/microphone.png" opacity="0.3" width="70%" height="70%" margin="15%"/>
+                </GridLayout>
+            </GridLayout>
             <AbsoluteLayout dock="bottom">
                 <Spinner align v-if="view == 'loading'"/>
                 <ProductsList v-else-if="view == 'items'" :items="items" />
@@ -18,6 +22,7 @@
 
 <script>
 import ProductsList from '../elements/ProductsList';
+import SpeechRecognition from '../../struct/speechRecognition';
 import DM from '~/struct/dm';
 
 export default {
@@ -30,6 +35,8 @@ export default {
 
         searchText: '',
         items: [],
+
+        speechLoading: false,
     }),
     watch: {
         searchText(){
@@ -69,8 +76,23 @@ export default {
                     this.view = 'error';
                 }
             });
+        },
+
+        voiceSearch(){
+            if(this.speechLoading) return;
+
+            this.speechLoading = true;
+            SpeechRecognition.start()
+            .then(text => {
+                this.searchText = text;
+                this.search();
+            })
+            .catch(err => console.log('SpeechRecognition:', err))
+            .finally(() => {
+                this.speechLoading = false;
+            })
         }
-    },
+    }
 }
 </script>
 

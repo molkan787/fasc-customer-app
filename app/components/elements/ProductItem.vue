@@ -15,7 +15,7 @@
             <GridLayout rows="auto" columns="*" class="ctrl_con">
                 <label class="priceLabel" :class="discounted ? 'promo' : ''" :text="getFinalPrice() | price" row="0" horizontalAlignment="left"/>
                 <label v-if="discounted" class="oldPriceLabel" :text="data.price | price" row="0" horizontalAlignment="left"/>
-                <Image class="favBtn" :src="`~/assets/icons/star_${data.in_wishlist ? 'filled' : 'outline'}.png`" @tap="fabButtonTappped"  row="0" horizontalAlignment="right"/>
+                <Image class="favBtn" :src="`~/assets/icons/heart_${data.in_wishlist ? 'highlighted' : 'simple'}.png`" @tap="fabButtonTappped"  row="0" horizontalAlignment="right"/>
                 <AddToCartButton @tap="tapped2" :quantity="data.quantity" @changed="updateCartCount()" v-model="counts[data.product_id]" class="btn_add"  row="0" horizontalAlignment="right"/>
             </GridLayout>
 
@@ -123,47 +123,47 @@ $pad: 6;
         label.title{
             margin-left: $h;
             margin-top: 4;
-            font-size: 18;
+            font-size: 16;
             width: 66%;
         }
         label.spf{
             margin-left: $h;
             margin-top: 24;
-            font-size: 16;
+            font-size: 14;
             color: #888;
         }
         Image.removeButton{
             width: 6%;
             margin: 4 0 0 93%;
-            opacity: 0.5;
+            opacity: 0.4;
         }
     }
 }
 .ctrl_con{
     width: 100%;
-    height: 54;
-    margin-top: $h - 54;
+    height: 48;
+    margin-top: $h - 48;
     padding-right: $pad;
-    padding-left: $h;
+    padding-left: $h + 4;
 }
 .btn_add{
-    margin-top: 14;
+    margin-top: 8;
 }
 .favBtn{
     width: 30;
     height: 30;
-    margin-top: 14;
+    margin-top: 10;
     margin-right: 105;
     padding: 4;
     background-color: white;
 }
 .oldPriceLabel{
-    font-size: 16;
+    font-size: 15;
     color: #777;
     text-decoration: line-through;
 }
 .priceLabel{
-    font-size: 20;
+    font-size: 18;
     margin-top: 18;
     color: #555;
     &.promo{
@@ -172,8 +172,8 @@ $pad: 6;
 }
 
 $pw: 50;
-$pX: $h - $pw;
-$pY: $h - $pw;
+$pX: 0;
+$pY: 0;
 .promoImg{
     margin-top: $pY;
     margin-left: $pX;
@@ -186,10 +186,10 @@ $pY: $h - $pw;
     width: $pw;
     height: $pw;
     color: white;
-    font-size: 16;
+    font-size: 14;
     font-weight: bold;
     text-align: center;
-    padding-top: ($pw - 22) / 2;
+    padding-top: ($pw - 18) / 2;
     rotate: -35deg;
 }
 </style>

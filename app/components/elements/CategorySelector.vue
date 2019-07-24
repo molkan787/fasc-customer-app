@@ -32,15 +32,6 @@ export default {
         selectedSubCat: 0,
     }),
     methods: {
-        // hideSubCats(){
-        //     this.$refs.subcats.nativeView.animate({
-        //         opacity: 0,
-        //         height: 0,
-        //         duration: 500,
-        //     }).then(() => {
-        //         this.$refs.subcats.nativeView.height = 0;
-        //     });
-        // },
         catsChanged(resetSubs){
             if(resetSubs && this.selectedSubCat != 0){
                 this.selectedSubCat = 0;

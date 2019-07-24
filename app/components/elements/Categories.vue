@@ -34,12 +34,12 @@ export default {
         }
     },
     mounted(){
-        let scrollview = this.$refs.scrollview.nativeView;
         setTimeout(() => {
             try {
-                 scrollview.android.setHorizontalScrollBarEnabled(false)
+                let scrollview = this.$refs.scrollview.nativeView;
+                scrollview.android.setHorizontalScrollBarEnabled(false)
             } catch (error) { }
-        }, 200);
+        }, 300);
     }
 }
 </script>

@@ -4,7 +4,7 @@
             rows="auto" :columns="row.sizes" :width="row.width" class="row">
 
             <Ripple v-for="(item, index) in row.items" :key="item.promo_id" row="0" :col="index"
-                class="item" rippleColor="white">
+                class="item" rippleColor="white" @tap="itemTapped(item)">
                 <Image :src="item.image"/>
             </Ripple>
 
@@ -77,6 +77,12 @@ export default {
                     return this.totalWidth / 3;
                 default:
                     return '0';
+            }
+        },
+
+        itemTapped(item){
+            if(item.link.replace(/\s/g, '')){
+                this.$goTo('customerProductsLost', { ids: item.link });
             }
         }
     },

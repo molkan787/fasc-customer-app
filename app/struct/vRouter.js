@@ -32,6 +32,8 @@ export default class vRouter{
 
         Vue.prototype.$vRoutes = this.getRoutes;
         Vue.prototype.$vRoutesGroups = this.getRoutesGroups;
+
+        Vue.prototype.$vRouter = this;
     }
 
     static navigateTo(pageName, params, options){
@@ -71,6 +73,11 @@ export default class vRouter{
     }
 
     static goBack() {
+        if (typeof this.oneTimeBackHandler == 'function'){
+            this.oneTimeBackHandler();
+            this.oneTimeBackHandler = null;
+            return;
+        }
         if (this.data.history.length < 2) return;
         this.data.history.pop();
         const previous = this.data.history[this.data.history.length-1];
@@ -112,6 +119,10 @@ export default class vRouter{
     }
     static get getRoutesGroups() {
         return vRouter.routesGroups;
+    }
+
+    static setOneTimeBackHandler(handler){
+        this.oneTimeBackHandler = handler;
     }
 
 }

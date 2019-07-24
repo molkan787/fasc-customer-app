@@ -1,7 +1,7 @@
 <template>
     <GridLayout :rows="rowsConfig" columns="*, 75, 35, 85" class="root" width="100%">
 
-        <label class="header name" row="0" col="0" text="Item"/>
+        <label class="header name" row="0" col="0" text="Name"/>
         <label class="header price" row="0" col="1" text="Price"/>
         <label class="header qty" row="0" col="2" text="Qty"/>
         <label class="header total" row="0" col="3" text="Total"/>

@@ -5,7 +5,7 @@ import CitySelection from '../components/pages/CitySelection';
 import WelcomeScreen from '../components/pages/WelcomeScreen';
 import LoadingScreen from '../components/pages/LoadingScreen';
 import HomePage from '../components/pages/Home';
-import AccountPage from '../components/pages/Account';
+import OrdersPage from '../components/pages/Orders';
 
 export default class Starter{
 
@@ -33,29 +33,24 @@ export default class Starter{
     // ---------------------------
 
     static getFirstPage(){
-        return AccountPage;
+        // return OrdersPage;
         if(!DM.alreadyLaunched){
-            console.log('First page: LoadingScreen');
             return LoadingScreen;
         } else if (!this.state.baseFetchParams.storeId) {
-            console.log('First page: CitySelection');
             return CitySelection;
         } else {
-            console.log('First page: LoadingScreen');
             return LoadingScreen;
         }
     }
 
     static stepAfterAsd(){
         if (!DM.alreadyLaunched) {
-            console.log('AfterAsd: WelcomeScreen');
             vRouter.justNavigate(WelcomeScreen);
         } else if (!this.state.baseFetchParams.storeId) {
-            console.log('AfterAsd: CitySelection');
             vRouter.justNavigate(CitySelection);
         } else {
-            console.log('AfterAsd: HomePage');
             vRouter.justNavigate(HomePage);
+            // vRouter.justNavigate(OrdersPage);
         }
     }
 

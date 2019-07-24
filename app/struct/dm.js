@@ -126,11 +126,25 @@ export default class DM{
     static async loadFavoriteProducts(){
         const resp = await dataFetcher.fetch('cpl/favorite');
         if(resp.status == 'OK'){
-            return resp.data.items;
+            const products = resp.data.items;
+            this._cacheProducts(products);
+            return products;
         }else{
             throw resp.error_code;
         }
     }
+
+    static async loadProductsList(ids) {
+        const resp = await dataFetcher.fetch('cpl/custom', { ids });
+        if (resp.status == 'OK') {
+            const products = resp.data.items;
+            this._cacheProducts(products);
+            return products;
+        } else {
+            throw resp.error_code;
+        }
+    }
+
 
     // ===================================
 
@@ -157,6 +171,9 @@ export default class DM{
         state.baseFetchParams.storeId = data.store_id;
         state.cityNames = data.city_names;
         
+        if (data.customer && data.customer.email && data.customer.email.substr(-16) == 'walkonretail.com')
+            data.customer.email = '';
+            
         state.customer = data.customer;
         state.customerAddresses = data.addresses;
         state.contactInfo = data.contact_info;

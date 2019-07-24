@@ -82,7 +82,7 @@ export default {
     width: 100%;
 }
 .text{
-    font-size: 23;
+    font-size: 21;
     color: white;
     text-align: center;
 }

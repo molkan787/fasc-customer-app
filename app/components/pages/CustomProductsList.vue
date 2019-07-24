@@ -1,5 +1,5 @@
 <template>
-    <MPage title="My Favorites">
+    <MPage title="Promotion" backButton>
         <Spinner v-if="loading" align />
         <ProductsList v-else-if="items.length" :items="items"/>
         <ImagePlaceholder v-else-if="error" text="Something went wrong" image="icons/no_net_outline.png"/>
@@ -15,6 +15,12 @@ export default {
     components: {
         ProductsList,
     },
+    props: {
+        ids: {
+            type: String,
+            default: '',
+        }
+    },
     data: () => ({
         loading: true,
         error: false,
@@ -22,15 +28,18 @@ export default {
     }),
     methods: {
         loadData(){
+            if(!this.ids){
+                this.loading = false;
+                return;
+            }
             this.error = false;
             this.loading = true;
-            DM.loadFavoriteProducts()
+            DM.loadProductsList(this.ids)
             .then(items => {
                 this.items = items;
             })
             .catch(err => {
                 this.error = true;
-                console.log(err);
             })
             .finally(() => {
                 this.loading = false;
@@ -39,11 +48,7 @@ export default {
     },
 
     mounted(){
-        if(this.$customer()){
-            this.loadData();
-        }else{
-            this.loading = false;
-        }
+        this.loadData();
     }
 }
 </script>

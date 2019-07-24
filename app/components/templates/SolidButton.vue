@@ -1,14 +1,18 @@
 <template>
     <Ripple @tap="tapped">
         <label class="lbl" horizontalAlignment="center" :text="text"
-            :padding="padding" :fontSize="fontSize" :color="color" :class="textAlign + (boldText ? ' bold' : '')"
-            :borderRadius="radius" :backgroundColor="backgroundColor"/>
+                :padding="padding" :fontSize="fontSize" :color="color" :class="textAlign + (boldText ? ' bold' : '')"
+                :borderRadius="radius" :backgroundColor="backgroundColor"/>
     </Ripple>
 </template>
 
 <script>
 export default {
     props:{
+        loading: {
+            type: Boolean,
+            default: true,
+        },
         text: {
             type: String,
             default: '',

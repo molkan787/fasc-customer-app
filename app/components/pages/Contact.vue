@@ -6,8 +6,8 @@
                 <label class="header" :text="`(${contactInfo.name})\n${contactInfo.address}`" textWrap="true"/>
                 <label class="separator"/>
                 <label class="header" text="You can contact us by calling or sending an email" textWrap="true"/>
-                <SubmitButton text="CALL US" radius="6" width="60%" @tap="call" marginBottom="10"/>
-                <SubmitButton text="SEND AN EMAIL" radius="6" width="60%" @tap="email"/>
+                <SubmitButton text="CALL US" radius="6" width="80%" @tap="call" marginBottom="10"/>
+                <SubmitButton text="SEND AN EMAIL" radius="6" width="80%" @tap="email"/>
                 <label class="subHeader" :text="`Phone: ${contactInfo.phone}\nEmail: ${contactInfo.email}`" textWrap="true"/>
             </StackLayout>
         </GridLayout>
@@ -44,7 +44,7 @@ export default {
     margin-top: -20;
 }
 .header{
-    font-size: 24;
+    font-size: 20;
     color: #666;
     margin-bottom: 30;
 }

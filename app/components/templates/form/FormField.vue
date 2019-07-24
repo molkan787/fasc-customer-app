@@ -1,5 +1,5 @@
 <template>
-    <StackLayout class="field_input" :class="first ? 'first' : (last ? 'last' : '')">
+    <StackLayout class="field_input" :class="{first, last}">
         <label v-if="title" class="title" :text="title"/>
         <slot></slot>
     </StackLayout>

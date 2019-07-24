@@ -17,14 +17,14 @@
                         </Carousel>
                         <Spinner v-if="loading" align backgroundColor="#99ffffff"/>
                     </GridLayout>
-                    <!-- <ShadowBar width="100%" opacity="0.1" :size="5"/> -->
-                    <AddToCartButton class="atcb" shadowSize="5" scaleX="1.2" scaleY="1.2" horizontalAlignment="right"
-                        @changed="updateCartCount()" v-model="counts[pid]" :quantity="quantity" />
-                    
-                    <AbsoluteLayout class="promo" v-if="discounted">
-                        <Image src="~/assets/icons/pstart_big.png"/>
-                        <label text="-50%"/>
-                    </AbsoluteLayout>
+
+                    <GridLayout class="atcb_con" height="35" width="164" horizontalAlignment="right">
+                        <CircleButton size="34" margin="12" @tap="toggleFavorite" horizontalAlignment="left">
+                            <Image :src="`~/assets/icons/heart_${initialData.in_wishlist ? 'highlighted' : 'simple'}.png`" height="23" margin="7 5 5 5"/>
+                        </CircleButton>
+                        <AddToCartButton class="atcb" shadowSize="5" scaleX="1.1" scaleY="1.1" horizontalAlignment="right"
+                            @changed="updateCartCount()" v-model="counts[pid]" :quantity="quantity" />
+                    </GridLayout>
 
                     <StackLayout class="prices" :class="discounted ? 'discounted' : ''">
                         <label class="oldPrice" :text="oldPrice | price" v-if="discounted"></label>
@@ -40,13 +40,15 @@
                 </StackLayout>
             </ScrollView>
 
-            <!-- <ShadowBar width="100%" opacity="0.8" :size="50" verticalAlignment="top"/> -->
-            <AbsoluteLayout height="50" verticalAlignment="top" padding="5">
-                <!-- <ShadowedLabel class="title" :text="title" marginLeft="40" /> -->
-                <CircleButton size="30" margin="7" @tap="goBack">
-                    <Image src="~/assets/icons/arrow_left.png" height="16" margin="7" opacity="0.2"/>
+            <GridLayout width="100%" height="100" verticalAlignment="top">
+                <AbsoluteLayout class="promo" v-if="discounted" horizontalAlignment="left" verticalAlignment="top">
+                    <Image src="~/assets/icons/pstart_big.png"/>
+                    <label :text="discountText"/>
+                </AbsoluteLayout>
+                <CircleButton size="30" margin="12" @tap="goBack" horizontalAlignment="right" verticalAlignment="top">
+                    <Image src="~/assets/icons/close_lines.png" height="16" margin="7" opacity="0.2"/>
                 </CircleButton>
-            </AbsoluteLayout>
+            </GridLayout>
 
         </GridLayout>
     </MPage>
@@ -56,6 +58,7 @@
 import AddToCartButton from '../elements/AddToCartButton';
 import Helper from '~/logic/helper';
 import { mapState, mapActions } from 'vuex';
+import DM from '~/struct/dm';
 
 export default {
     components: {
@@ -114,13 +117,22 @@ export default {
                 this.title = d.name;
                 this.description = d.description;
                 this.images = [data.image];
-                // this.images = [data.image, ...data.images];
                 this.loading = false;
                 this.$nextTick(() => {
-                    this.$refs.carousel.nativeView.refresh();
+                    try {
+                        this.$refs.carousel.nativeView.refresh();
+                    } catch (error) {
+                    }
                 });
             });
         },
+        toggleFavorite(){
+            this.initialData.in_wishlist = !this.initialData.in_wishlist;
+            DM.setFavoriteState(this.initialData.product_id, this.initialData.in_wishlist)
+            .catch(err => console.log('FavoriteLogic.setState:', err));
+        },
+
+
         goBack(){
             this.$modal.close();
         },
@@ -130,21 +142,22 @@ export default {
         const w = this.$getViewSize().width * 0.9;
         this.CarouselHeight = w;
         this.myWidth = w;
-
-        this.images.push('http://169.254.80.80/image/cache/catalog/Products/62baec6a4c187dbfa6fecf8e50db7c83-250x250.jpg')
-        this.images.push('http://169.254.80.80/image/cache/catalog/Products/86d6ee45e704c61e271c59c8a960f6fd-200x200.jpg')
     },
 
     mounted(){
         this.update();
+        this.$vRouter.setOneTimeBackHandler(() => this.goBack());
     }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~/styles/vars';
+.atcb_con{
+    margin: -22 8 0 0;
+}
 .atcb{
-    margin: -22 15 0 0;
+    margin-right: 6;
 }
 .title{
     font-size: 18;
@@ -156,18 +169,18 @@ export default {
 }
 .promo{
     horizontal-alignment: left;
-    width: 100;
-    height: 100;
-    margin-top: -65;
+    width: 80;
+    height: 80;
+    margin-top: 0;
     Image{
         width: 100%;
         height: 100%;
     }
     label{
         color: white;
-        font-size: 24;
+        font-size: 18;
         font-weight: bold;
-        margin-top: 31;
+        margin-top: 27;
         width: 100%;
         text-align: center;
         rotate: -35deg;
@@ -179,7 +192,7 @@ export default {
     font-size: 15;
 }
 .price{
-    font-size: 24;
+    font-size: 22;
     font-weight: bold;
     color: #333;
     &.discounted{
@@ -191,20 +204,15 @@ export default {
     text-align: left;
     margin-top: -10;
     padding-left: 14;
-    &.discounted{
-        margin-top: -50;
-        text-align: center;
-        padding-right: 26;
-    }
 }
 .desc_title{
     padding: 14;
-    font-size: 20;
+    font-size: 19;
     font-weight: bold;
     padding-bottom: 0;
 }
 .description{
     padding: 14;
-    font-size: 16;
+    font-size: 15;
 }
 </style>

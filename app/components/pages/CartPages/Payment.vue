@@ -1,13 +1,5 @@
 <template>
     <AbsoluteLayout width="100%" height="100%">
-        <!-- <StackLayout width="100%" height="100%">
-
-            <StackLayout class="total">
-                <label class="text" text="Total order value"/>
-                <label class="value" :text="total | price"/>
-            </StackLayout>
-            
-        </StackLayout> -->
 
         <Form>
 
@@ -75,18 +67,10 @@ export default {
         },
 
         confirmButtonClick(){
-            if(this.paymentMethodIndex == 1){
-                alert({
-                    title: 'Cart',
-                    message: 'Payment method "Credit Card/Net Banking" isn\'t available.',
-                    okButtonText: 'OK',
-                })
-            }else{
-                if(this.canConfirm){
-                    this.canConfirm = false;
-                    setTimeout(() => this.canConfirm = true, 500);
-                    this.$emit('confirm');
-                }
+            if(this.canConfirm){
+                this.canConfirm = false;
+                setTimeout(() => this.canConfirm = true, 500);
+                this.$emit('confirm');
             }
         }
     },

@@ -1,4 +1,6 @@
 import DataFetcher from '~/struct/dataFetcher';
+// import { HandleFile } from 'nativescript-handle-file';
+const utilsModule = require("tns-core-modules/utils/utils");
 
 export default class Orders{
 
@@ -27,6 +29,20 @@ export default class Orders{
         } else {
             throw resp.error_code;
         }
+    }
+
+    static async downloadInvoice(order_id){
+        const dl = DataFetcher.buildQueryUrl('invoice', { order_id });
+        console.log(dl)
+        utilsModule.openUrl(dl);
+        return true;
+        // const handleFile = new HandleFile();
+        // return await handleFile.open({
+        //     name: `WalkOn Invoice ${order_id}.pdf`,
+        //     url: dl,
+        //     directory: 'downloads', 
+        //     title: 'Open invoice with'
+        // });
     }
 
 }

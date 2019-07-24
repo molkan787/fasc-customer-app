@@ -6,15 +6,18 @@
                 <DockLayout ~drawerContent heghit="100%" backgroundColor="#ffffff">
                     <StackLayout dock="top">
                         <Image class="drawer-header" src="~/assets/images/slogo.png" />
-                        <AbsoluteLayout class="dh-item">
-                            <Image src="~/assets/icons/location.png"/>
-                            <label :text="cityName"/>
-                        </AbsoluteLayout>
-                        <AbsoluteLayout class="dh-item last">
-                            <Image src="~/assets/icons/user.png"/>
-                            <label v-if="customer" :text="customer.firstname + ' ' + customer.lastname"/>
-                            <label v-else text="Login" @tap="$goTo('login', {tab: 'login'})" class="loginBtn"/>
-                        </AbsoluteLayout>
+
+                        <GridLayout class="dh-item last">
+                            <AbsoluteLayout horizontalAlignment="left">
+                                <Image src="~/assets/icons/user.png"/>
+                                <label v-if="customer" :text="customer.firstname + ' ' + customer.lastname"/>
+                                <label v-else text="Login" @tap="$goTo('login', {tab: 'login'})" class="loginBtn"/>
+                            </AbsoluteLayout>
+                            <AbsoluteLayout horizontalAlignment="right" @tap="cityNameTap">
+                                <Image src="~/assets/icons/location.png"/>
+                                <label :text="cityName"/>
+                            </AbsoluteLayout>
+                        </GridLayout>
 
                         <ScrollView orientation="vertical" :height="menuItemsConHeight">
                             <StackLayout>
@@ -171,6 +174,9 @@ export default {
                 this.$justNavigate(CitySelection);
             }
         },
+        cityNameTap(){
+            this.$justNavigate(CitySelection);
+        },
 
         pageLoaded(){
             if (app.android && platform.device.sdkVersion >= "21") {
@@ -225,18 +231,20 @@ $pad: 8;
     font-size: 16;
 }
 .dh-item{
-    $h: 20;
+    $h: 18;
     width: 100%;
     height: $h + 8;
-    padding: 4 4 4 18;
-    Image{
-        width: $h;
-        height: $h;
-    }
-    label{
-        margin-left: $h + 2;
-        font-size: 16;
-        margin-top: -1;
+    padding: 4 18 4 22;
+    AbsoluteLayout{
+        Image{
+            width: $h;
+            height: $h;
+        }
+        label{
+            margin-left: $h + 2;
+            font-size: 14;
+            margin-top: -1;
+        }
     }
     &.last{
         margin-bottom: 10;
@@ -248,7 +256,7 @@ $pad: 8;
 .menuSeperator{
     width: 70%;
     height: 1;
-    margin: 8 0 4 -20;
+    margin: 8 0 4 8;
     background-color: #ddd;
 }
 .copyrightLabel{

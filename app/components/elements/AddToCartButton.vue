@@ -1,15 +1,15 @@
 <template>
-    <CardView class="root" radius="32" width="100" height="32" :elevation="qty > 0 ? shadowSize : 0" ripple="true" @tap="rootTap">
+    <CardView class="root" :class="qty < 1 ? 'ofs' : ''" radius="32" width="100" height="32" elevation="0" ripple="true" @tap="rootTap"> <!-- qty > 0 ? shadowSize : 0 -->
         <template v-if="qty < 1">
-            <label text="NO STOCK" />
+            <label text="OUT OF STOCK" class="ofs" />
         </template>
         <template v-else-if="!value">
             <label text="ADD" />
         </template>
         <GridLayout v-else class="ctrls" rows="auto" columns="*">
-            <Image row="0" horizontalAlignment="left" @tap="updateCount(-1)" src="~/assets/icons/minus_orange.png" />
+            <Image row="0" horizontalAlignment="left" @tap="updateCount(-1)" src="~/assets/icons/minus_white.png" />
             <label row="0" horizontalAlignment="center" :text="value"/>
-            <Image row="0" horizontalAlignment="right" @tap="updateCount(1)" src="~/assets/icons/plus_orange.png" />
+            <Image row="0" horizontalAlignment="right" @tap="updateCount(1)" src="~/assets/icons/plus_white.png" />
         </GridLayout>
     </CardView>
 </template>
@@ -64,18 +64,22 @@ export default {
 .root{
     border-radius: 500;
     label{
-        background-color: white;
-        color: $primary-color;
+        background-color: $primary-color;
+        color: white;
         border-color: $primary-color;
         border-radius: 50%;
         height: 32;
         padding: 0;
         text-align: center;
         padding: 6;
+        &.ofs{
+            background-color: white;
+        }
     }
 }
 .ctrls{
     width: 100%;
+    background-color: $primary-color;
     Image{
         border-radius: 50%;
         padding: 10;
@@ -83,9 +87,15 @@ export default {
         height: 32;
     }
     label{
-        font-size: 18;
+        font-size: 17;
         font-weight: bold;
         margin-top: -4;
+        color: white;
     }
+}
+label.ofs{
+    margin-top: 2;
+    font-size: 12;
+    color: $red;
 }
 </style>

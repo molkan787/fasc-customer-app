@@ -1,5 +1,7 @@
 import DataFetcher from '../struct/dataFetcher';
 import DynamicTexts from './dynamicTexts';
+import { RazorpayCheckout } from 'nativescript-razorpay';
+
 export default class CartLogic{
 
     static init(context){
@@ -47,10 +49,55 @@ export default class CartLogic{
         };
         
         const resp = await DataFetcher.post('pos/addOrderCS', data);
+
         if(resp.status == 'OK'){
+
+            if (paymentMethod != 'cod') {
+                const success = await this.payment(resp.data, paymentMethod);
+                if (!success)
+                    throw 'payment_canceled';
+            }
+
             this.context.dispatch('clearCart');
             return resp.data;
         }else{
+            throw resp.error_code;
+        }
+    }
+
+    static async payment(data, method){
+        if(method == 'razor'){
+            return await this._pay_Razorpay(data);
+        }
+    }
+
+    // -------------------------------------
+
+    static async _pay_Razorpay(data){
+        const customer = this.context.state.customer;
+        let payment_id;
+        try {
+            payment_id = await new RazorpayCheckout(data.api_key).open({
+                "amount": parseFloat(data.total) * 100, //In paise 
+                "description": 'WalkOn Retail Order #' + data.order_id,
+                "image": "https://walkonretail.com/image/catalog/Logos/circle_logo.png",
+                "name": "WalkOn Retail",
+                "prefill": {
+                    "contact": customer.phone,
+                    "email": customer.email,
+                    "name": customer.firstname + ' ' + customer.lastname,
+                },
+                theme: {
+                    color: '#F36F24'
+                }
+            });
+        } catch (error) {
+            return false;   
+        }
+        const resp = await DataFetcher.fetch('cspv/razor', { payment_id, order_id: data.order_id });
+        if (resp.status == 'OK') {
+            return true;
+        } else {
             throw resp.error_code;
         }
     }

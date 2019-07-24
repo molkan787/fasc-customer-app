@@ -2,31 +2,45 @@
     <MPage backButton :title="title" :loading="loading" >
         <Pager width="100%" height="100%" :selectedIndex="currentPageIndex" disableSwipe="true">
             <PagerItem>
-                <StackLayout padding="14">
-                    <TextInputField title="First name" v-model="register.firstname"/>
-                    <TextInputField title="Last name" v-model="register.lastname"/>
-                    <TextInputField title="Phone number" v-model="register.telephone" keyboard="phone"/>
-                    <TextInputField title="Email address" v-model="register.email"/>
-                    <SolidButton @tap="registerTap" text="Register" color="white" backgroundColor="#F36F24" radius="4" padding="12"/>
-                    <SolidButton @tap="openTab('login')" text="I am already registered" marginTop='10' backgroundColor="#f5f5f5" radius="4" padding="12"/>
-                    <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
+                <StackLayout>
+                    <Form>
+                        <TextInputField title="First name" v-model="register.firstname" first/>
+                        <TextInputField title="Last name" v-model="register.lastname"/>
+                        <TextInputField title="Phone number" v-model="register.telephone" keyboard="phone"/>
+                        <TextInputField title="Email address" v-model="register.email" last/>
+                    </Form>
+                    <StackLayout padding="14">
+                        <SolidButton @tap="registerTap" text="Register" color="white" backgroundColor="#F36F24" radius="50" padding="12"/>
+                        <SolidButton @tap="openTab('login')" text="I am already registered" marginTop='10' backgroundColor="#f5f5f5" radius="50" padding="12"/>
+                        <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
+                    </StackLayout>
                 </StackLayout>
             </PagerItem>
 
             <PagerItem>
-                <StackLayout padding="14">
-                    <TextInputField title="Phone number" v-model="login.telephone" keyboard="phone"/>
-                    <SolidButton @tap="loginTap" text="Login" color="white" backgroundColor="#F36F24" radius="4" padding="12"/>
-                    <SolidButton @tap="openTab('register')" text="I want to register" marginTop='10' backgroundColor="#f5f5f5" radius="4" padding="12"/>
-                    <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
+                <StackLayout>
+                    <Form :shadowOpacity="0.05" shadowPadding="4 0 0 0">
+                        <TextInputField title="Phone number" v-model="login.telephone" keyboard="phone" first last/>
+                    </Form>
+                    <StackLayout padding="14">
+                        <SolidButton @tap="loginTap" text="Login" color="white" backgroundColor="#F36F24" radius="50" padding="12"/>
+                        <SolidButton @tap="openTab('register')" text="I want to register" marginTop='10' backgroundColor="#f5f5f5" radius="50" padding="12"/>
+                        <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
+                    </StackLayout>
                 </StackLayout>
             </PagerItem>
 
             <PagerItem>
-                <StackLayout padding="14">
-                    <label class="verifyHeadText" :text='`We have sent you a verification code to ${verify.telephone}, Type it in the box below.`' textWrap="true"/>
-                    <TextInputField title="Verification code" hint="xxxxxx" v-model="verify.code" keyboard="number"/>
-                    <SolidButton @tap="verifyTap" text="Verify" color="white" backgroundColor="#F36F24" radius="4" padding="12"/>
+                <StackLayout>
+                    <Form :shadowOpacity="0.15">
+                        <FormField first>
+                            <label class="verifyHeadText" :text='`We have sent you a verification code to ${verify.telephone}, Type it in the box below.`' textWrap="true"/>
+                        </FormField>
+                        <TextInputField last title="Verification code" hint="xxxxxx" v-model="verify.code" keyboard="number"/>
+                    </Form>
+                    <StackLayout padding="14">
+                        <SolidButton @tap="verifyTap" text="Verify" color="white" backgroundColor="#F36F24" radius="50" padding="12"/>
+                    </StackLayout>
                 </StackLayout>
             </PagerItem>
         </Pager>
@@ -34,11 +48,15 @@
 </template>
 
 <script>
+import Form from '../templates/form/Form';
+import FormField from '../templates/form/FormField';
 import TextInputField from '../templates/form/TextInputField';
 import Account from '~/logic/account';
 
 export default {
     components: {
+        Form,
+        FormField,
         TextInputField,
     },
     props: {
