@@ -1,5 +1,5 @@
 <template>
-    <Ripple class="root" width="140" @tap="tap">
+    <Ripple class="root" :class="{ expand }" :width="expand ? '100%' : '140'" @tap="tap">
         <AbsoluteLayout>
                 <label :text="data.name"/>
                 <Image :src="data.image"/>
@@ -13,6 +13,10 @@ export default {
         data: {
             type: Object,
             default: () => {},
+        },
+        expand: {
+            type: Boolean,
+            default: false,
         }
     },
     methods: {
@@ -29,12 +33,16 @@ $lh: 20;
 $pad: 6;
 .root{
     margin-right: 8;
-    width: 120;
     height: $h;
     padding: $pad;
     border-width: 1;
     border-color: #eeeeee;
     border-radius: 6;
+
+    &.expand{
+        margin-right: 0;
+        margin-bottom: 4;
+    }
 
     $ih: $h - $lh - $pad * 3;
     Image{

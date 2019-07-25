@@ -1,14 +1,25 @@
 <template>
-    <page container="scrollStack">
-        <Banners :items="banners" />
-        <Categories title="Categories" :items="categories" class="cats cat_con" @itemTapped="catTapped"/>
-        <Categories title="Brands" :items="brands" class="cat_con" @itemTapped="catTapped"/>
-        <transition name="fade">
-            <label v-if="ads.length" class="separator"/>
-        </transition>
-        <transition name="fade">
-            <Ads v-if="ads.length" :items="ads" />
-        </transition>
+    <page container="absolute" :backButton="currentPageIndex > 0">
+        <Pager width="100%" height="100%" :selectedIndex="currentPageIndex" disableSwipe="true">
+            <PagerItem>
+                <ScrollView width="100%" height="100%" >
+                    <StackLayout>
+                        <Banners :items="banners" />
+                        <Categories title="Categories" name="categories" :items="categories" class="cats cat_con" @viewAllTap="viewAllTap" @itemTapped="catTapped"/>
+                        <Categories title="Brands" name="brands" :items="brands" class="cat_con" @viewAllTap="viewAllTap" @itemTapped="catTapped"/>
+                        <transition name="fade">
+                            <label v-if="ads.length" class="separator"/>
+                        </transition>
+                        <transition name="fade">
+                            <Ads v-if="ads.length" :items="ads" />
+                        </transition>
+                    </StackLayout>
+                </ScrollView>
+            </PagerItem>
+            <PagerItem>
+                <Categories :title="viewAllTitle" expand class="cat_con" :items="viewAllItems" @itemTapped="catTapped"/>
+            </PagerItem>
+        </Pager>
     </page>
 </template>
 
@@ -27,12 +38,13 @@ export default {
         Categories,
         Ads,
     },
-    data(){
-        return {
-            categories: [],
-            brands: [],
-        }
-    },
+    data: () => ({
+        currentPageIndex: 0,
+        categories: [],
+        brands: [],
+        viewAllItems: [],
+        viewAllTitle: '',
+    }),
     methods: {
         updateItems(){
             if(!(this.items instanceof Array)) return;
@@ -41,6 +53,15 @@ export default {
         },
         catTapped(catId){
             this.$goTo('products', {catId});
+        },
+
+        viewAllTap(type){
+            this.viewAllTitle = type == 'brands' ? 'Brands' : 'Categories';
+            this.viewAllItems = type == 'brands' ? this.brands : this.categories;
+            this.currentPageIndex = 1;
+            this.$vRouter.setOneTimeBackHandler(() => {
+                this.currentPageIndex = 0;
+            })
         }
     },
     computed: mapState({

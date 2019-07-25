@@ -2,11 +2,12 @@
     <StackLayout class="root">
         <DockLayout class="header" width="100%"  stretchLastChild="true">
             <label dock="left" :text="title" class="title"/>
-            <label dock="right" text="View all" class="viewAllLabel"/>
+            <label dock="right" text="View all" class="viewAllLabel" @tap="viewAllTap" v-if="!expand"/>
         </DockLayout>
-        <ScrollView ref="scrollview" orientation="horizontal">
-            <StackLayout class="items" orientation="horizontal">
-                <CategoryItem v-for="item in items" :key="item.category_id" :data="item" @tap="itemTap"/>
+        <ScrollView ref="scrollview" :orientation="expand ? 'vertical' : 'horizontal'">
+            <StackLayout class="items" :class="{ expand }" :orientation="expand ? 'vertical' : 'horizontal'">
+                <CategoryItem v-for="item in items" :key="item.category_id"
+                    :expand="expand" :data="item" @tap="itemTap"/>
             </StackLayout>
         </ScrollView>
     </StackLayout>
@@ -26,12 +27,24 @@ export default {
         items: {
             type: Array,
             default: () => [],
+        },
+        name: {
+            type: String,
+            default: ''
+        },
+        expand: {
+            type: Boolean,
+            default: false,
         }
     },
     methods: {
         itemTap(catId){
             this.$emit('itemTapped', catId);
-        }
+        },
+
+        viewAllTap(){
+            this.$emit('viewAllTap', this.name);
+        },
     },
     mounted(){
         setTimeout(() => {
@@ -58,6 +71,9 @@ $pad: 14;
 }
 .items{
     padding-left: $pad;
+    &.expand{
+        padding-right: $pad;
+    }
 }
 .header{
     padding-right: $pad;

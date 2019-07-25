@@ -94,6 +94,19 @@ export default class Account{
         }
     }
 
+    static async updateInfo(data){
+        const resp = await DataFetcher.post('customer/update', data);
+        if (resp.status == 'OK') {
+            const customer = this.context.state.customer;
+            customer.firstname = data.firstname;
+            customer.lastname = data.lastname;
+            customer.email = data.email;
+            return true;
+        } else {
+            throw resp.error_code;
+        }
+    }
+
 
     // =====================================
     static _cacheCustomerData(customer){

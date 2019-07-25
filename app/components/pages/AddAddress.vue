@@ -72,6 +72,7 @@ export default {
             if(this.setToOrderData){
                 this.cart.order.deliveryAddress = addrIndex;
             }
+            console.log(JSON.stringify(this.redirect))
             if(this.redirect && this.redirect.name){
                 const params = this.redirect.params || {};
                 params.addrIndex = addrIndex;

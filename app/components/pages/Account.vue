@@ -1,128 +1,92 @@
 <template>
-    <MPage title="My Account">
+    <MPage :title="titles[currentPageIndex]" :backButton="currentPageIndex > 0">
         <DockLayout width="100%" height="100%" class="root" stretchLastChild="true">
-            <StackLayout dock="top" width="100%" class="header" >
-                <Image src="~/assets/images/generic-user-purple.png"/>
-                <label :text="customerName"/>
-            </StackLayout>
 
-            <CardsPager :items="cards"/>
-
-            <DockLayout dock="bottom" width="100%" height="100%" stretchLastChild="true" horizontalAlignment="center">
-                <CardView dock="top" elevation="3" ripple="true" radius="6" class="card" height="90" width="94%" marginTop="7">
-                    <StackLayout class="form_field" padding="16">
-                        <label class="title" text="Phone number"/>
-                        <label class="field_value" :text="customerPhone"/>
+            <Pager width="100%" height="100%" :selectedIndex="currentPageIndex" disableSwipe="true">
+                <PagerItem>
+                    <StackLayout>
+                        <StackLayout width="100%" class="header" >
+                            <Image src="~/assets/images/generic-user-purple.png"/>
+                            <label :text="customerName"/>
+                        </StackLayout>
+                        <CardsPager :items="cards" @tapped="cardTapped"/>
                     </StackLayout>
-                </CardView>
-                <GridLayout dock="bottom">
-                    <CardView elevation="3" radius="6" class="card" width="94%" height="92%" marginTop="7">
-                        <AbsoluteLayout width="100%" height="100%">
-                            <DockLayout class="form_field" padding="16" stretchLastChild="true" width="100%" height="100%">
-                                <DockLayout dock="top" width="100%" height="30">
-                                    <label class="title" text="Addresses" dock="left"/>
-                                    <label text="" width="30%" dock="center"/>
-                                    <SolidButton dock="right" padding="0" fontSize="16" @tap="addAddressTap"
-                                        text="Add new address" color="#F36F24" textAlign="right"/>
-                                </DockLayout>
-                                <ScrollView dock="bottom">
-                                    <StackLayout>
-                                        <AddressItem v-for="addr in customerAddresses" :key="addr.address_id"
-                                            :data="addr" @deleteTap="addrDeleteTap"/>
-                                    </StackLayout>
-                                </ScrollView>
-                            </DockLayout>
-                            <Spinner v-if="addressesLoading" align backgroundColor="#60ffffff" />
-                        </AbsoluteLayout>
-                    </CardView>
-                </GridLayout>
-            </DockLayout>
+                </PagerItem>
+
+                <PagerItem>
+                    <SettingsPage />
+                </PagerItem>
+
+                <PagerItem>
+                    <AddressesPage />
+                </PagerItem>
+            </Pager>
+
         </DockLayout>
     </MPage>
 </template>
 
 <script>
-import ValueField from '../templates/form/ValueField';
-import FormField from '../templates/form/FormField';
 import CardsPager from '../elements/CardsPager';
-import AddressItem from '../elements/AddressItem';
-import { mapState } from 'vuex';
-import Helper from '~/logic/helper';
-import AccountLogic from '~/logic/account';
+import AddressesPage from './AccountPages/Addresses';
+import SettingsPage from './AccountPages/Settings';
 
 export default {
     components: {
         CardsPager,
-        ValueField,
-        FormField,
-        AddressItem,
+        AddressesPage,
+        SettingsPage,
+    },
+    props: {
+        tabIndex: {
+            type: Number,
+            default: 0,
+        }
     },
     computed: {
-        ...mapState(['customerAddresses']),
         customerName(){
             const c = this.$customer();
             if(!c) return '';
             return c.firstname + ' ' + c.lastname;
-        },
-        customerPhone(){
-            const c = this.$customer();
-            if(!c) return '';
-            return c.phone;
         }
     },
     data: () => ({
-        addressesLoading: false,
-        cardsSizes: '',
+        titles: [
+            'My Account',
+            'Settings',
+            'Addresses'
+        ],
+        currentPageIndex: 0,
+
         cards: [
-            {icon: 'card_circle', text: 'Addresses'},
-            {icon: 'heart_cricle', text: 'Favorites'},
-            {icon: 'help_circle', text: 'Support'},
-            {icon: 'settings_circle', text: 'Settings'},
+            {icon: 'card_circle', text: 'Addresses', name: 'addresses'},
+            {icon: 'heart_cricle', text: 'Favorites', name: 'favorites'},
+            {icon: 'help_circle', text: 'Support', name: 'support'},
+            {icon: 'settings_circle', text: 'Settings', name: 'settings'},
         ]
     }),
     methods: {
-        addrDeleteTap(addr){
-            const addr_str = Helper.addressObjectToString(addr);
-            this.confirm(`Are you sure you want to delete address "${addr_str}"?`)
-            .then(result => {
-                if(!result) return;
-                this.addressesLoading = true;
-                AccountLogic.deleteAddress(addr.address_id)
-                .then(() => {
-                    this.msg('The address was successfully deleted.');
-                })
-                .catch(err => {
-                    this.msg('We could not complete the action, Please try again.');
-                })
-                .finally(() => {
-                    this.addressesLoading = false;
+
+        cardTapped(name){
+            if(name == "favorites"){
+                this.$goTo('fav');
+            }else if(name == 'support'){
+                this.$goTo('contact');
+            }else{
+                if(name == 'settings'){
+                    this.currentPageIndex = 1;
+                }else if(name == 'addresses'){
+                    this.currentPageIndex = 2;
+                }
+                this.$vRouter.setOneTimeBackHandler(() => {
+                    this.currentPageIndex = 0;
                 });
-            })
+            }
         },
-
-        addAddressTap(){
-            this.$goTo('addAddress');
-        },
-
-        msg(text){
-            return alert({
-                title: 'Account',
-                message: text,
-                okButtonText: 'OK'
-            });
-        },
-
-        confirm(text){
-            return confirm({
-                title: 'Account',
-                message: text,
-                okButtonText: 'Yes',
-                cancelButtonText: 'No'
-            });
-        }
     },
+
     mounted(){
-        
+        this.currentPageIndex = this.tabIndex;
     }
 }
 </script>

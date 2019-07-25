@@ -44,6 +44,7 @@ $h: 40;
     }
     label{
         font-size: 18;
+        padding-right: 30;
         color: #444;
     }
 }

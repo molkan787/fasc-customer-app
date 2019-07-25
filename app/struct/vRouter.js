@@ -47,6 +47,7 @@ export default class vRouter{
         const animation = (options && options.animation) ? options.animation : 'slideLeft';
         const route = this.routesMap[pageName];
         if (route) {
+            this.oneTimeBackHandler = null;
             this.data.current = pageName;
             if (history){
                 this.data.history.push({
