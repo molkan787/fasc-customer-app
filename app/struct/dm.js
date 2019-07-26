@@ -1,4 +1,5 @@
 import dataFetcher from './dataFetcher';
+import LiveDataUpdater from '../logic/liveDataUpdater';
 import * as appSettings from 'application-settings';
 
 const OK = 'OK';
@@ -16,6 +17,7 @@ export default class DM{
         this.productsMapped = context.state.productsMapped;
         this.productsList = context.state.productsList;
         dataFetcher.setup(context);
+        LiveDataUpdater.setup(context);
         this.loadSettings();
     }
 
@@ -60,11 +62,13 @@ export default class DM{
 
     static async loadAsd() {
         try {
+            LiveDataUpdater.stop();
             const ssi = this.context.state.baseFetchParams.ssi;
             const query = ssi ? 'asd&ssi=true' : 'asd';
             const resp = await dataFetcher.fetch(query);
             this.context.state.baseFetchParams.ssi = false;
             this._cacheAsdData(resp.data);
+            LiveDataUpdater.start();
             return resp.data;
         } catch (error) {
             console.log('loadAsd Error', error)
@@ -178,6 +182,8 @@ export default class DM{
         state.customerAddresses = data.addresses;
         state.contactInfo = data.contact_info;
         state.bsd = data.bsd;
+
+        LiveDataUpdater.setLastUpdateTime(data.time);
 
         this.saveSettings();
     }
