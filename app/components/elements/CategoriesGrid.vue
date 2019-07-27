@@ -64,7 +64,7 @@ export default {
 
         updateRows(){
             const len = Math.floor(this.items.length / 3) + 1;
-            this.rows = [...Array(len)].map(() => '81').join(',');
+            this.rows = new Array(len).fill('81').join(',');
         }
     },
     mounted(){
