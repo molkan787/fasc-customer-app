@@ -44,7 +44,8 @@ export default {
             this.loading = true;
             AccountLogic.updateInfo(this.formData)
             .then(() => {
-                this.$alert('Your data have been successfully updated.', 'Account');
+                this.$alert('Your data have been successfully updated.', 'Account')
+                .then(() => this.$goBack());
             })
             .catch(err => {
                 this.$alert('Something went wrong, We couldn\'t update your data.', 'Account');

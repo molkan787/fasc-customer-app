@@ -1,15 +1,13 @@
 <template>
-    <StackLayout class="root">
-        <DockLayout class="header" width="100%"  stretchLastChild="true">
-            <label dock="left" :text="title" class="title"/>
-            <label dock="right" text="View all" class="viewAllLabel" @tap="viewAllTap"/>
-        </DockLayout>
-        <ScrollView ref="scrollview" orientation="horizontal">
-            <StackLayout class="items" orientation="horizontal">
-                <CategoryItem v-for="item in items" :key="item.category_id" :data="item" @tap="itemTap"/>
+    <DockLayout class="root" tretchLastChild="true" width="100%" height="100%">
+        <label dock="top" :text="title" class="header title"/>
+        <ScrollView dock="bottom" ref="scrollview" orientation="vertical">
+            <StackLayout class="items" orientation="vertical">
+                <CategoryItem v-for="item in items" :key="item.category_id"
+                    expand :data="item" @tap="itemTap"/>
             </StackLayout>
         </ScrollView>
-    </StackLayout>
+    </DockLayout>
 </template>
 
 <script>

@@ -17,7 +17,7 @@
                 </ScrollView>
             </PagerItem>
             <PagerItem>
-                <Categories :title="viewAllTitle" expand class="cat_con" :items="viewAllItems" @itemTapped="catTapped"/>
+                <CategoriesGrid :title="viewAllTitle" class="cat_con" :items="viewAllItems" @itemTapped="catTapped"/>
             </PagerItem>
         </Pager>
     </page>
@@ -27,6 +27,7 @@
 import page from '../templates/page';
 import Banners from '../elements/Banners';
 import Categories from '../elements/Categories';
+import CategoriesGrid from '../elements/CategoriesGrid';
 import Ads from '../elements/Ads';
 import { mapState } from 'vuex';
 import dm from '~/struct/dm';
@@ -36,6 +37,7 @@ export default {
         page,
         Banners,
         Categories,
+        CategoriesGrid,
         Ads,
     },
     data: () => ({

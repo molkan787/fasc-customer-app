@@ -89,7 +89,8 @@ export default class vRouter{
                 name: 'slideRight',
                 duration: 250,
                 curve: 'easeInOut'
-            }
+            },
+            props: previous.params,
         });
     }
 

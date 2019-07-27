@@ -1,5 +1,5 @@
 <template>
-    <Ripple class="root" :class="{ expand }" :width="expand ? '100%' : '140'" @tap="tap">
+    <Ripple class="root" :class="{ expand }" :width="expand ? '' : '140'" @tap="tap">
         <AbsoluteLayout>
                 <label :text="data.name"/>
                 <Image :src="data.image"/>

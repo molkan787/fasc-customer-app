@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Vue from 'nativescript-vue'
+import LiveDataUpdater from '~/logic/liveDataUpdater';
 import ProductItem from './ProductItem';
 export default {
     components: {
@@ -33,11 +33,23 @@ export default {
     data: () => ({
         show: {}
     }),
+    watch: {
+        items(){
+            this.emitIds();
+        }
+    },
     methods: {
+        emitIds(){
+            const ids = this.items.map(item => item.product_id);
+            LiveDataUpdater.setCheckIds(ids);
+        },
         itemTapped(item){
             this.$goTo('productInfo', {initialData: item}, { modal: true });
         },
     },
+    mounted(){
+        this.emitIds();
+    }
 }
 </script>
 

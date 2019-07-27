@@ -7,22 +7,23 @@ export default class LiveDataUpdater{
         this.state = context.state;
         this.lastUpdateTime = 0;
         this.timer = 0;
+
+        this.checkIds = [];
     }
 
     static setLastUpdateTime(time){
         this.lastUpdateTime = parseInt(time);
     }
 
+    static setCheckIds(ids){
+        this.checkIds = ids;
+    }
+
     static start(){
-        this.reset();
         this.do();
     }
 
     static stop(){
-        this.reset();
-    }
-
-    static reset(){
         this.stopTimer();
     }
 
@@ -41,9 +42,9 @@ export default class LiveDataUpdater{
 
     static async do(){
         try {
-            const data = await this.fetchData();
+            const ids = this.getIdsToCheck();
+            const data = await this.fetchData(ids);
             this.lastUpdateTime = data.time;
-            console.log(JSON.stringify(data));
             this.patchData(data);
         } catch (error) {
             
@@ -51,8 +52,18 @@ export default class LiveDataUpdater{
         this.scheduleCheck();
     }
 
-    static async fetchData(){
-        const query = `asd/liveUpdate&time=${this.lastUpdateTime}&pids=77,60`;
+    static getIdsToCheck() {
+        const counts = this.state.cart.counts;
+        const ids = [];
+        for(let pid in counts){
+            if(counts[pid]) ids.push(pid);
+        }
+        ids.push(...this.checkIds);
+        return ids.join(',');
+    }
+
+    static async fetchData(ids){
+        const query = `asd/liveUpdate&time=${this.lastUpdateTime}&pids=${ids}`;
         const resp = await dataFetcher.fetch(query);
         if (resp.status == 'OK') {
             return resp.data;
