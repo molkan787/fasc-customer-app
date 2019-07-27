@@ -3,22 +3,7 @@ import CartLogic from './cart';
 import AccountLogic from './account';
 import CitiesLogic from './cities';
 
-import HomePage from '../components/pages/Home';
-import FavoritesPage from '../components/pages/Favorites';
-import CartPage from '../components/pages/Cart';
-import ProductsPage from '../components/pages/Products';
 import ProductInfoPage from '../components/pages/ProductInfo';
-import LoginPage from '../components/pages/Login';
-import AccountPage from '../components/pages/Account';
-import AddAddressPage from '../components/pages/AddAddress';
-import OrdersPage from '../components/pages/Orders';
-import OrderInfoPage from '../components/pages/OrderInfo';
-import OrderOnPhonePage from '../components/pages/OrderOnPhone';
-import OrderOnWhatsappPage from '../components/pages/OrderOnWhatsapp';
-import ContactPage from '../components/pages/Contact';
-import CompanyInfoPage from '../components/pages/CompanyInfo';
-import SearchPage from '../components/pages/Search';
-import CustomProductsListPage from '../components/pages/CustomProductsList';
 
 export default class Logic{
 
@@ -32,7 +17,7 @@ export default class Logic{
             name: 'home',
             text: 'Home',
             icon: 'home',
-            comp: HomePage,
+            comp: 'HomePage',
             group: 1,
         });
         
@@ -40,7 +25,7 @@ export default class Logic{
             name: 'cart',
             text: 'My Cart',
             icon: 'cart',
-            comp: CartPage,
+            comp: 'CartPage',
             group: 1,
         });
 
@@ -48,7 +33,7 @@ export default class Logic{
             name: 'account',
             text: 'My Account',
             icon: 'user',
-            comp: AccountPage,
+            comp: 'AccountPage',
             group: 1,
         });
 
@@ -56,7 +41,7 @@ export default class Logic{
             name: 'orders',
             text: 'My Orders',
             icon: 'package',
-            comp: OrdersPage,
+            comp: 'OrdersPage',
             group: 1,
         });
 
@@ -64,7 +49,7 @@ export default class Logic{
             name: 'fav',
             text: 'My Favorites',
             icon: 'favorite',
-            comp: FavoritesPage,
+            comp: 'FavoritesPage',
             group: 1,
         });
 
@@ -72,7 +57,7 @@ export default class Logic{
             name: 'order_on_phone',
             text: 'Order on Phone',
             icon: 'phone',
-            comp: OrderOnPhonePage,
+            comp: 'OrderOnPhonePage',
             group: 1,
         });
 
@@ -80,7 +65,7 @@ export default class Logic{
             name: 'order_on_whatsapp',
             text: 'Order on WhatsApp',
             icon: 'whatsapp',
-            comp: OrderOnWhatsappPage,
+            comp: 'OrderOnWhatsappPage',
             group: 1,
         });
         
@@ -89,14 +74,14 @@ export default class Logic{
             name: 'contact',
             text: 'Contact us',
             icon: 'mail',
-            comp: ContactPage,
+            comp: 'ContactPage',
             group: 2,
         });
         vRouter.addRoute({
             name: 'companyInfo',
             text: 'About company',
             icon: 'info',
-            comp: CompanyInfoPage,
+            comp: 'CompanyInfoPage',
             group: 2,
         });
 
@@ -104,7 +89,7 @@ export default class Logic{
             name: 'products',
             text: 'Products',
             icon: 'cart',
-            comp: ProductsPage,
+            comp: 'ProductsPage',
             group: 3,
             hidden: true,
         });
@@ -113,7 +98,7 @@ export default class Logic{
             name: 'search',
             text: 'Search',
             icon: 'search',
-            comp: SearchPage,
+            comp: 'SearchPage',
             group: 3,
             hidden: true,
         });
@@ -122,7 +107,7 @@ export default class Logic{
             name: 'customerProductsLost',
             text: 'Promotion',
             icon: 'cart',
-            comp: CustomProductsListPage,
+            comp: 'CustomProductsListPage',
             group: 3,
             hidden: true,
         });
@@ -131,7 +116,7 @@ export default class Logic{
             name: 'orderInfo',
             text: 'Order details',
             icon: 'cart',
-            comp: OrderInfoPage,
+            comp: 'OrderInfoPage',
             group: 3,
             hidden: true,
         });
@@ -140,7 +125,7 @@ export default class Logic{
             name: 'addAddress',
             text: 'Add Address',
             icon: 'cart',
-            comp: AddAddressPage,
+            comp: 'AddAddressPage',
             group: 3,
             hidden: true,
         });
@@ -157,7 +142,7 @@ export default class Logic{
         vRouter.addRoute({
             name: 'login',
             text: 'Account',
-            comp: LoginPage,
+            comp: 'LoginPage',
             group: 3,
             hidden: true,
         });

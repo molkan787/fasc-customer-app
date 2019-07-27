@@ -5,6 +5,7 @@ export default class vRouter{
         this.Vue = Vue;
         this.store = store;
         this.data = store.state.router;
+        this.pagesHandler = null;
         this.routesMap = {};
         this.routesGroups = {
             '1': [],
@@ -36,6 +37,18 @@ export default class vRouter{
         Vue.prototype.$vRouter = this;
     }
 
+    static setPagesHandler(handler){
+        this.pagesHandler = handler;
+    }
+
+    static setPagesPropsHandler(handler){
+        this.pagesPropsHandler = handler;
+    }
+
+    static pagePropsChange(name, value){
+        this.pagesPropsHandler(name, value);
+    }
+
     static navigateTo(pageName, params, options){
         if (pageName == 'cart' && this.data.current == pageName) return;
         if (pageName == 'account' && !this.store.state.customer){
@@ -61,14 +74,7 @@ export default class vRouter{
                     props: params,
                 }, null, true);
             }else{
-                topmost().currentPage.__vuePageRef__.$navigateTo(route.comp, {
-                    transition: {
-                        name: animation,
-                        duration: 250,
-                        curve: 'easeInOut'
-                    },
-                    props: params,
-                });
+                this.pagesHandler(route, params, options);
             }
         }
     }
@@ -84,14 +90,7 @@ export default class vRouter{
         const previous = this.data.history[this.data.history.length-1];
         const route = this.routesMap[previous.name];
         this.data.current = previous.name;
-        topmost().currentPage.__vuePageRef__.$navigateTo(route.comp, {
-            transition: {
-                name: 'slideRight',
-                duration: 250,
-                curve: 'easeInOut'
-            },
-            props: previous.params,
-        });
+        this.pagesHandler(route, previous.params, { isBack: true });
     }
 
     static justNavigate(comp){

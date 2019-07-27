@@ -11,8 +11,8 @@
                     </Form>
                     <StackLayout padding="14">
                         <SolidButton @tap="registerTap" text="Register" color="white" backgroundColor="#F36F24" radius="50" padding="12"/>
+                        <SolidButton @tap="fbLogin" text="Continue with Facebook" marginTop='10' backgroundColor="#3B5998" color="white" radius="50" padding="12"/>
                         <SolidButton @tap="openTab('login')" text="I am already registered" marginTop='10' backgroundColor="#f5f5f5" radius="50" padding="12"/>
-                        <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
                     </StackLayout>
                 </StackLayout>
             </PagerItem>
@@ -24,8 +24,8 @@
                     </Form>
                     <StackLayout padding="14">
                         <SolidButton @tap="loginTap" text="Login" color="white" backgroundColor="#F36F24" radius="50" padding="12"/>
+                        <SolidButton @tap="fbLogin" text="Continue with Facebook" marginTop='10' backgroundColor="#3B5998" color="white" radius="50" padding="12"/>                        
                         <SolidButton @tap="openTab('register')" text="I want to register" marginTop='10' backgroundColor="#f5f5f5" radius="50" padding="12"/>
-                        <Image @tap="fbLogin" src="~/assets/images/login_with_fb.png" width="100%" marginTop="50"/>
                     </StackLayout>
                 </StackLayout>
             </PagerItem>

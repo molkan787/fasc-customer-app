@@ -4,8 +4,8 @@ import DM from '../struct/dm';
 import CitySelection from '../components/pages/CitySelection';
 import WelcomeScreen from '../components/pages/WelcomeScreen';
 import LoadingScreen from '../components/pages/LoadingScreen';
-import HomePage from '../components/pages/Home';
-import AccountPage from '../components/pages/Account';
+import ProductInfoPage from '../components/pages/ProductInfo';
+import MainPage from '../components/pages/MainPage';
 
 export default class Starter{
 
@@ -33,7 +33,7 @@ export default class Starter{
     // ---------------------------
 
     static getFirstPage(){
-        // return OrdersPage;
+        // return ProductInfoPage;
         if(!DM.alreadyLaunched){
             return LoadingScreen;
         } else if (!this.state.baseFetchParams.storeId) {
@@ -49,8 +49,8 @@ export default class Starter{
         } else if (!this.state.baseFetchParams.storeId) {
             vRouter.justNavigate(CitySelection);
         } else {
-            vRouter.justNavigate(HomePage);
-            // vRouter.justNavigate(AccountPage);
+            vRouter.justNavigate(MainPage);
+            // vRouter.justNavigate(ProductInfoPage);
         }
     }
 

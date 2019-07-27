@@ -1,6 +1,6 @@
 <template>
-    <MPage :actionBar="false" container="none" :width="myWidth">
-        <GridLayout>
+    <Page actionBarHidden="true" :width="myWidth" >
+        <GridLayout height="100%" width="100%">
             <ScrollView height="100%">
                 <StackLayout>
                     <GridLayout class="root" width="100%" :height="CarouselHeight" ref="images" margin="0">
@@ -51,7 +51,7 @@
             </GridLayout>
 
         </GridLayout>
-    </MPage>
+    </Page>
 </template>
 
 <script>
@@ -67,7 +67,7 @@ export default {
     props: {
         initialData: {
             type: Object,
-            required: false,
+            default: () => ({}),
         }
     },
     computed: mapState({
