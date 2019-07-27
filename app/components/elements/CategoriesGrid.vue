@@ -1,11 +1,12 @@
 <template>
     <DockLayout class="root" tretchLastChild="true" width="100%" height="100%">
         <label dock="top" :text="title" class="header title"/>
-        <ScrollView dock="bottom" ref="scrollview" orientation="vertical">
-            <StackLayout class="items" orientation="vertical">
-                <CategoryItem v-for="item in items" :key="item.category_id"
-                    expand :data="item" @tap="itemTap"/>
-            </StackLayout>
+        <ScrollView dock="bottom" ref="scrollview" orientation="vertical" width="100%">
+            <GridLayout width="100%" class="items" :rows="rows" :columns="cols">
+                <CategoryItem v-for="(item, index) in items" :key="item.category_id"
+                    expand :data="item" @tap="itemTap" :row="getRow(index)" :col="getCol(index)"
+                    :horizontalAlignment="getAlignment(index)"/>
+            </GridLayout>
         </ScrollView>
     </DockLayout>
 </template>
@@ -30,6 +31,15 @@ export default {
             default: ''
         }
     },
+    watch: {
+        items(){
+            this.updateRows();
+        }
+    },
+    data: () => ({
+        cols: '',
+        rows: '',
+    }),
     methods: {
         itemTap(catId){
             this.$emit('itemTapped', catId);
@@ -38,8 +48,29 @@ export default {
         viewAllTap(){
             this.$emit('viewAllTap', this.name);
         },
+
+        getRow(index){
+            return Math.floor(index / 3);
+        },
+        getCol(index){
+            return index % 3;
+        },
+        getAlignment(index){
+            const col = this.getCol(index);
+            if(col == 1) return 'center';
+            else if(col == 2) return 'right';
+            else return 'left';
+        },
+
+        updateRows(){
+            const len = Math.floor(this.items.length / 3) + 1;
+            this.rows = [...Array(len)].map(() => '81').join(',');
+        }
     },
     mounted(){
+        const col = (this.$getViewSize().width - 28) / 3;
+        this.cols = [col, col, col].join(',');
+        this.updateRows();
         setTimeout(() => {
             try {
                 let scrollview = this.$refs.scrollview.nativeView;
@@ -64,9 +95,7 @@ $pad: 14;
 }
 .items{
     padding-left: $pad;
-    &.expand{
-        padding-right: $pad;
-    }
+    padding-right: $pad;
 }
 .header{
     padding-right: $pad;

@@ -21,6 +21,13 @@ export default class Cities{
     static async loadData(){
         const resp = await DataFetcher.fetch('asd/sas');
         if(resp.status == 'OK'){
+            const prop = 'name_' + this.context.state.baseFetchParams.lang;
+            const cities = resp.data.cities;
+            resp.data.cities = cities.sort((a, b) => {
+                if (a[prop] < b[prop]) return -1;
+                if (a[prop] > b[prop]) return 1;
+                return 0;
+            });
             this.data = resp.data;
             return resp.data.cities;
         }else{
