@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    xmlns:android="http://schemas.android.com/apk/res/android" package="__PACKAGE__" android:versionCode="10000" android:versionName="1.0.0">
+    xmlns:android="http://schemas.android.com/apk/res/android" package="__PACKAGE__" android:versionCode="20050" android:versionName="2.0.5">
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" />
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="__APILEVEL__" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,11 +9,19 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     
     <application android:name="com.tns.NativeScriptApplication" android:allowBackup="true" android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@style/AppTheme">
-        <activity android:name="com.tns.NativeScriptActivity" android:screenOrientation="portrait" android:label="@string/title_activity_kimera" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@style/LaunchScreenTheme">
+        <activity android:name="com.tns.NativeScriptActivity" android:screenOrientation="portrait" android:label="@string/title_activity_kimera" android:configChanges="keyboardHidden|orientation|screenSize" android:theme="@style/LaunchScreenTheme" android:launchMode="singleTop">
             <meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="https"
+                    android:host="open.walkonretail.com"
+                    android:pathPrefix="/p" />
+                <action android:name="android.intent.action.VIEW" /> 
+                <category android:name="android.intent.category.DEFAULT" /> 
+                <category android:name="android.intent.category.BROWSABLE" /> 
             </intent-filter>
         </activity>
         <activity android:name="com.tns.ErrorReportActivity" />

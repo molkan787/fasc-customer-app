@@ -24,6 +24,9 @@ export default {
         hint: {
             default: 'Select a date',
         },
+        minDate: {
+            default: null,
+        },
         disabled: {
             type: Boolean,
             default: false,
@@ -41,7 +44,7 @@ export default {
         labelTapped(){
             if(this.disabled) return;
 
-            this.$selectDate().then(result => {
+            this.$selectDate({ minDate: this.minDate }).then(result => {
                 this.$emit('input', result);
                 this.$emit('changed', result);
             })

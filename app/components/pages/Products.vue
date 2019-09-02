@@ -5,7 +5,7 @@
             <!-- <ShadowBar dock="top" size="20" marginBottom="-20" ref="shadow"/> -->
 
             <Spinner dock="bottom" v-if="loading" align :size="60" />
-            <ProductsList dock="bottom" v-else :items="items" />
+            <ProductsList dock="bottom" v-else :items="items" @requestRefresh="pullRefresh" />
 
         </DockLayout>
     </page>
@@ -116,6 +116,9 @@ export default {
         childSubCatId: 0,
     }),
     methods: {
+        pullRefresh(callback){
+            this.loadItems(true).then(() => callback());
+        },
         catChanged(arg){
             if(this.subCatId != arg.cat){
                 this.subs = [];
@@ -124,23 +127,27 @@ export default {
             this.childSubCatId = arg.sub;
             this.loadItems();
         },
-        loadItems(){
-            this.loading = true;
+        async loadItems(skipSpinner){
+            if(!skipSpinner) this.loading = true;
             const filters = {
                 cat: this.catId,
                 subcat: this.subCatId || '',
                 child_subcat: this.childSubCatId || '',
             }
-            // console.log('Filters:', filters)
-            this.$dm.getProducts(filters).then(({items, child_subcat}) => {
+            
+            try {
+                const {items, child_subcat} = await this.$dm.getProducts(filters)
                 this.items = items;
                 if(child_subcat.length == 0){
                     if(!this.childSubCatId) this.subs = [];
                 }else{
                     this.subs = child_subcat
                 }
-                this.loading = false;
-            });
+            } catch (error) {
+                this.items = [];
+                this.subs = [];
+            }
+            this.loading = false;
         }
     },
     mounted(){

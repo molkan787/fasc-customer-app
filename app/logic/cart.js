@@ -57,7 +57,6 @@ export default class CartLogic{
                 if (!success)
                     throw 'payment_canceled';
             }
-
             this.context.dispatch('clearCart');
             return resp.data;
         }else{
