@@ -1,5 +1,6 @@
 import { screen } from "platform";
 import StaticData from './staticData';
+import Notifications from './struct/notifications';
 const ModalPicker = require("nativescript-modal-datetimepicker")
     .ModalDatetimepicker;
 const _picker = new ModalPicker();
@@ -7,6 +8,8 @@ const _picker = new ModalPicker();
 export default class Utils{
 
     static install(Vue){
+
+        Vue.prototype.$notify = (title, body, channel) => Notifications.schedule(title, body, channel);
 
         Vue.prototype.$alert = (msg, title) => alert({
             title: title || StaticData.get('companyName'),
@@ -26,7 +29,9 @@ export default class Utils{
             height: screen.mainScreen.heightDIPs
         });
 
-        Vue.prototype.$sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+        const sleep = (time) => new Promise((resolve) => setTimeout(() => resolve(), time));
+        Vue.prototype.$sleep = sleep;
+        global.sleep = sleep;
 
         Vue.prototype.$selectDate = (params) => new Promise((resolve, reject) => {
             if(!params) params = {};

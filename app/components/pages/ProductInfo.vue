@@ -18,8 +18,11 @@
                         <Spinner v-if="loading" align backgroundColor="#99ffffff"/>
                     </GridLayout>
 
-                    <GridLayout class="atcb_con" height="35" width="164" horizontalAlignment="right">
-                        <CircleButton size="34" margin="12" @tap="toggleFavorite" horizontalAlignment="left">
+                    <GridLayout class="atcb_con" height="35" width="204" horizontalAlignment="right">
+                        <CircleButton size="34" margin="12" @tap="share" horizontalAlignment="left">
+                            <Image src="~/assets/icons/share_black.png" height="23" margin="5 7 9 9"/>
+                        </CircleButton>
+                        <CircleButton size="34" margin="12 12 12 52" @tap="toggleFavorite" horizontalAlignment="left">
                             <Image :src="`~/assets/icons/heart_${initialData.in_wishlist ? 'highlighted' : 'simple'}.png`" height="23" margin="7 5 5 5"/>
                         </CircleButton>
                         <AddToCartButton class="atcb" shadowSize="5" scaleX="1.1" scaleY="1.1" horizontalAlignment="right"
@@ -59,6 +62,7 @@ import AddToCartButton from '../elements/AddToCartButton';
 import Helper from '~/logic/helper';
 import { mapState, mapActions } from 'vuex';
 import DM from '~/struct/dm';
+const SocialShare = require("nativescript-social-share");
 
 export default {
     components: {
@@ -117,6 +121,8 @@ export default {
                 this.title = d.name;
                 this.description = d.description;
                 this.images = [data.image];
+                this.oldPrice = data.price;
+                this.fPrice = Helper.getFinalPrice(data);
                 this.loading = false;
                 this.$nextTick(() => {
                     try {
@@ -132,6 +138,11 @@ export default {
             .catch(err => console.log('FavoriteLogic.setState:', err));
         },
 
+        share(){
+            let text = 'WalkOn Retail\n' + this.initialData.title + '\n';
+            text += 'https://open.walkonretail.com/p/' +  this.initialData.product_id;
+            SocialShare.shareText(text);
+        },
 
         goBack(){
             this.$modal.close();
@@ -145,7 +156,11 @@ export default {
     },
 
     mounted(){
-        this.update();
+        try {
+            this.update();
+        } catch (error) {
+            console.log(error)
+        }
         this.$vRouter.setOneTimeBackHandler(() => this.goBack());
     }
 }

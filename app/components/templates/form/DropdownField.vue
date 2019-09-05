@@ -1,8 +1,11 @@
 <template>
     <FormField :first="first" :last="last" :title="title">
-        <DropDown class="dropdown" :items="items" :selectedIndex="value" 
+        <GridLayout rows="*" columns="*, 18">
+            <DropDown row="0" col="0" class="dropdown" :items="items" :selectedIndex="value" 
                 @selectedIndexChange="selectedIndexChange"
                 :disabled="disabled" :hint="hint == null ? title : hint" ref="dd" />
+            <Image row="0" col="1" class="arrowDown" src="~/assets/icons/arrow_down.png" @tap="arrowDownTap"/>
+        </GridLayout>
         <slot></slot>        
     </FormField>
 </template>
@@ -55,6 +58,12 @@ export default {
             const index = this.$refs.dd.nativeView.selectedIndex;
             this.$emit('input', index);
             this.$emit('selectedIndexChanged', index);
+        },
+
+        arrowDownTap(){
+            console.log('Calling');
+            this.$refs.dd.nativeView.open();
+            console.log('No errors');
         }
     }
     
@@ -74,5 +83,8 @@ export default {
     margin: 0 0 0 -12;
     background-color: white;
 }
-
+.arrowDown{
+    opacity: 0.3;
+    margin-top: 4;
+}
 </style>

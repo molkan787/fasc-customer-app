@@ -21,6 +21,11 @@ import DM from './struct/dm';
 import DynamicTexts from './logic/dynamicTexts';
 import StaticData from './staticData';
 
+import urlHandler from './logic/urlHandler';
+import { handleOpenURL } from 'nativescript-urlhandler';
+
+handleOpenURL(appURL => urlHandler.handle(appURL));
+
 import VueDevtools from 'nativescript-vue-devtools'
 
 if(TNS_ENV !== 'production') {
@@ -35,12 +40,18 @@ Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement('Ripple', () => require('nativescript-ripple').Ripple);
 Vue.registerElement('DropDown', () => require("nativescript-drop-down/drop-down").DropDown);
-Vue.registerElement('CheckBox', () => require('nativescript-checkbox').CheckBox, {
-  model: {
-    prop: 'checked',
-    event: 'checkedChange'
+Vue.registerElement(
+  'PullToRefresh',
+  () => require('@nstudio/nativescript-pulltorefresh').PullToRefresh
+);
+Vue.registerElement('CheckBox', () => require('@nstudio/nativescript-checkbox').CheckBox,
+  {
+    model: {
+      prop: 'checked',
+      event: 'checkedChange'
+    }
   }
-});
+);
 
 Vue.component('MPage', MPage);
 Vue.component('Spinner', Spinner);
@@ -74,9 +85,11 @@ application.android.on(application.AndroidApplication.activityBackPressedEvent, 
   vRouter.goBack();
 });
 
-// Starter ++++
+// Starter ++++++
 import Starter from './logic/starter';
 Vue.use(Starter, store);
+
+
 
 new Vue({
   store,

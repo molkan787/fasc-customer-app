@@ -11,7 +11,7 @@
         </DropdownField>
 
         <SelectDateField v-model="formData.deliveryDate" title="Delivery date"
-            @changed="deliveryDateChanged"/>
+            @changed="deliveryDateChanged" minDate="now"/>
 
         <FormField title="Delivery time" last>
             <check-box class="cb" boxType="circle" fillColor="#F36F24" color="#666" scaleX="1.1" scaleY="1.1"

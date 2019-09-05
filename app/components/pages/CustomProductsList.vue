@@ -1,5 +1,5 @@
 <template>
-    <MPage title="Promotion" backButton>
+    <MPage :title="productsTitle ? 'Products' : 'Promotion'" backButton>
         <Spinner v-if="loading" align />
         <ProductsList v-else-if="items.length" :items="items"/>
         <ImagePlaceholder v-else-if="error" text="Something went wrong" image="icons/no_net_outline.png"/>
@@ -19,7 +19,8 @@ export default {
         ids: {
             type: String,
             default: '',
-        }
+        },
+        productsTitle: Boolean,
     },
     data: () => ({
         loading: true,

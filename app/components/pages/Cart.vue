@@ -137,6 +137,8 @@ export default {
             .then(data => {
                 this.lastOrderId = data.order_id;
                 this.currentPageIndex = 3;
+
+                this.$notify('WalkOn Retail Order #' + data.order_id, 'Your order was successfully placed!');
             })
             .catch(err => {
                 if(err != 'payment_canceled')

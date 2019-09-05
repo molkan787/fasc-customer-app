@@ -1,28 +1,30 @@
 {
   "name": "wor-customer",
-  "version": "1.0.0",
+  "version": "2.0.7",
   "description": "Multi Store Grocery App",
   "author": "DrmStudio.pl",
   "license": "MIT",
   "nativescript": {
-    "id": "pl.drmstudio.wor.customer",
+    "id": "xyz.drmstudio.surjan",
     "tns-ios": {
-      "version": "5.0.0"
+      "version": "6.0.1"
     },
     "tns-android": {
-      "version": "5.3.1"
+      "version": "6.0.2"
     }
   },
   "dependencies": {
+    "@nstudio/nativescript-checkbox": "^1.0.0",
+    "@nstudio/nativescript-pulltorefresh": "^1.0.1",
     "@vue/devtools": "^5.0.6",
     "axios": "^0.19.0",
     "nativescript-cardview": "^3.1.1",
-    "nativescript-carousel": "^4.1.0",
-    "nativescript-checkbox": "^3.0.3",
+    "nativescript-carousel": "^6.1.0",
     "nativescript-drop-down": "^5.0.2",
     "nativescript-facebook": "^4.1.0",
+    "nativescript-local-notifications": "^3.2.2",
     "nativescript-modal-datetimepicker": "^1.2.0",
-    "nativescript-pager": "^9.5.4",
+    "nativescript-pager": "^10.0.0",
     "nativescript-razorpay": "^1.2.2",
     "nativescript-ripple": "^2.2.1",
     "nativescript-social-share": "^1.5.2",
@@ -31,10 +33,11 @@
     "nativescript-statusbar": "^5.0.0",
     "nativescript-theme-core": "^1.0.4",
     "nativescript-toasty": "^1.3.0",
-    "nativescript-ui-sidedrawer": "^4.3.0",
+    "nativescript-ui-sidedrawer": "7.0.0",
+    "nativescript-urlhandler": "^1.3.0",
     "nativescript-vue": "^2.0.0",
     "nativescript-vue-devtools": "^1.2.0",
-    "tns-core-modules": "^5.0.2",
+    "tns-core-modules": "6.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -48,7 +51,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "lazy": "1.0.11",
-    "nativescript-dev-webpack": "^0.24.1",
+    "nativescript-dev-webpack": "1.0.1",
     "nativescript-vue-template-compiler": "^2.0.0",
     "nativescript-worker-loader": "~0.9.0",
     "node-sass": "^4.9.2",

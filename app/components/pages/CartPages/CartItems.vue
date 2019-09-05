@@ -1,5 +1,5 @@
 <template>
-    <ProductsList showCartTools :items="items" padding="1 0 50 0"/>
+    <ProductsList showCartTools :items="items" padding="1 0 50 0" @requestRefresh="cb => cb()"/>
 </template>
 
 <script>

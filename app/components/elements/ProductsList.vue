@@ -1,11 +1,13 @@
 <template>
     <AbsoluteLayout class="root" width="100%" height="100%">
-        <ScrollView orientation="vertical" width="100%" height="100%">
-            <StackLayout orientation="vertical" :padding="padding">
-                <ProductItem v-for="(item) in items" :key="item.product_id" :data="item" @tap="itemTapped(item)" :showCartTools="showCartTools" />
-            </StackLayout>
-        </ScrollView>
-        <ImagePlaceholder v-if="items.length == 0" image="icons/package.png" text="Nothing to show here"/>
+        <PullToRefresh width="100%" height="100%" @refresh="pullRefresh">
+            <ScrollView orientation="vertical" width="100%" height="100%">
+                <StackLayout orientation="vertical" :padding="padding">
+                    <ProductItem v-for="(item) in items" :key="item.product_id" :data="item" @tap="itemTapped(item)" :showCartTools="showCartTools" />
+                    <ImagePlaceholder height="400" v-if="items.length == 0" image="icons/package.png" text="Nothing to show here"/>
+                </StackLayout>
+            </ScrollView>
+        </PullToRefresh>
     </AbsoluteLayout>
 </template>
 
@@ -46,6 +48,10 @@ export default {
         itemTapped(item){
             this.$goTo('productInfo', {initialData: item}, { modal: true });
         },
+
+        pullRefresh(args){
+            this.$emit('requestRefresh', () => args.object.refreshing = false);
+        }
     },
     mounted(){
         this.emitIds();
