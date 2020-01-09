@@ -4,5 +4,5 @@ export default {
     // apiBaseURL: 'http://fasc.local/index.php?session={%4}&lang={%3}&store_id={%1}&api_token={%2}&route=api/',
     apiBaseURL: 'https://www.walkonretail.com/index.php?session={%4}&lang={%3}&store_id={%1}&api_token={%2}&route=api/',
 
-    liveDataUpdateInterval: 10 * 1000, // 10 Seconds
+    liveDataUpdateInterval: 15 * 1000, // 15 Seconds
 }

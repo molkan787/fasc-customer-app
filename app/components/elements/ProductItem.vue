@@ -89,6 +89,10 @@ export default {
         },
 
         toggleFavorite(){
+            if(!this.$store.state.customer){
+                this.$alert('Please login or register to able to add product to your favorites.');
+                return;
+            }
             this.data.in_wishlist = !this.data.in_wishlist;
             DM.setFavoriteState(this.data.product_id, this.data.in_wishlist)
             .catch(err => console.log('FavoriteLogic.setState:', err));

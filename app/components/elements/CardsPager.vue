@@ -32,9 +32,13 @@ export default {
     }),
     methods: {
         updateCardsSize(){
-            const tw = this.$refs.root.nativeView.getActualSize().width;
-            const htw = (tw - 20) / 2;
-            this.cardsSize = htw + ',' + htw;
+            try {
+                const tw = this.$refs.root.nativeView.getActualSize().width;
+                const htw = (tw - 20) / 2;
+                this.cardsSize = htw + ',' + htw;
+            } catch (error) {
+                
+            }
         },
 
         cardTapped(index){
@@ -44,10 +48,22 @@ export default {
     },
 
     mounted(){
-        const root = this.$refs.root.nativeView;
-        root.on("layoutChanged", () => {
-            setTimeout(() => this.updateCardsSize(), 1);
-        })
+        const fun = () => {
+            const root = this.$refs.root.nativeView;
+            root.on("layoutChanged", () => {
+                setTimeout(() => this.updateCardsSize(), 100);
+            })
+        };
+        try {
+            fun();
+        } catch (error) {
+            sleep(300);
+            try {
+                fun();
+            } catch (error) {
+                
+            }
+        }
     }
 }
 </script>

@@ -133,6 +133,10 @@ export default {
             });
         },
         toggleFavorite(){
+            if(!this.$store.state.customer){
+                this.$alert('Please login or register to able to add product to your favorites.');
+                return;
+            }
             this.initialData.in_wishlist = !this.initialData.in_wishlist;
             DM.setFavoriteState(this.initialData.product_id, this.initialData.in_wishlist)
             .catch(err => console.log('FavoriteLogic.setState:', err));
