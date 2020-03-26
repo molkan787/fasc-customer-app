@@ -1,8 +1,8 @@
 {
   "name": "wor-customer",
-  "version": "2.0.8",
+  "version": "2.2.0",
   "description": "Multi Store Grocery App",
-  "author": "DrmStudio.pl",
+  "author": "Dahmane Seghier @ dahmane.pl",
   "license": "MIT",
   "nativescript": {
     "id": "xyz.drmstudio.surjan",
@@ -22,6 +22,7 @@
     "nativescript-carousel": "^6.1.0",
     "nativescript-drop-down": "^5.0.2",
     "nativescript-facebook": "^4.1.0",
+    "nativescript-filterable-listpicker": "^2.2.6",
     "nativescript-local-notifications": "^3.2.2",
     "nativescript-modal-datetimepicker": "^1.2.0",
     "nativescript-pager": "^10.0.0",
@@ -54,7 +55,7 @@
     "nativescript-dev-webpack": "1.0.1",
     "nativescript-vue-template-compiler": "^2.0.0",
     "nativescript-worker-loader": "~0.9.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.1.0",
     "terser-webpack-plugin": "^1.1.0",
     "vue-loader": "^15.2.6",

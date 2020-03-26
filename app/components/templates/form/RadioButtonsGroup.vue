@@ -53,6 +53,7 @@ export default {
 .title{
     font-size: 14;
     margin-bottom: 4;
+    color: #F36F24;
 }
 .form_field{
     margin-top: 10;

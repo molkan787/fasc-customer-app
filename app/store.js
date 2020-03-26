@@ -83,7 +83,7 @@ export default new Vuex.Store({
       context.dispatch('updateCartTotal');
     },
 
-    updateCartCount(context){
+    async updateCartCount(context){
       const state = context.state;
       const items = [];
       const counts = state.cart.counts;

@@ -2,7 +2,7 @@
     <CardView margin="2" elevation="0" radius="6" width="98%" height="100" class="root" ref="rootPanel" ripple="true" @tap="tapped" >
         <AbsoluteLayout height="100" class="subRoot">
 
-            <Image class="picmin" :src="data.image"/>
+            <Image class="picmin" :src="image" />
             <label class="title" :text="data.title"></label>
             <Image v-if="showCartTools" class="removeButton" src="~/assets/icons/close_black.png" @tap="removeButtonTapped"/>
             <label class="spf" v-if="parseInt(data.spf)" :text="data.spf + ' ' + data.spf_unit"/>
@@ -42,7 +42,15 @@ export default {
             default: false,
         }
     },
+    watch: {
+        data(){
+            this.image = null;
+            setTimeout(() => this.image = this.data.image, 1)
+        }
+    },
     data: () => ({
+        image: null,
+        showImage: false,
         count: 0,
         discounted: false,
         discountText: '',
@@ -97,6 +105,9 @@ export default {
             DM.setFavoriteState(this.data.product_id, this.data.in_wishlist)
             .catch(err => console.log('FavoriteLogic.setState:', err));
         }
+    },
+    mounted(){
+        this.image = this.data.image;
     },
     created(){
         const da = parseFloat(this.data.discount_amt);

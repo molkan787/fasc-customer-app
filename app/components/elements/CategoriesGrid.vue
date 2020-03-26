@@ -13,6 +13,7 @@
 
 <script>
 import CategoryItem from './CategoryItem';
+const cols = 2;
 export default {
     components:{
         CategoryItem,
@@ -50,25 +51,25 @@ export default {
         },
 
         getRow(index){
-            return Math.floor(index / 3);
+            return Math.floor(index / cols);
         },
         getCol(index){
-            return index % 3;
+            return index % cols;
         },
         getAlignment(index){
             const col = this.getCol(index);
-            if(col == 1) return 'center';
-            else if(col == 2) return 'right';
+            if(col == 1) return 'right';
+            // else if(col == 2) return 'right';
             else return 'left';
         },
 
         updateRows(){
-            const len = Math.floor(this.items.length / 3) + 1;
-            this.rows = new Array(len).fill('81').join(',');
+            const len = Math.floor(this.items.length / cols) + 1;
+            this.rows = new Array(len).fill('100').join(',');
         }
     },
     mounted(){
-        const col = (this.$getViewSize().width - 28) / 3;
+        const col = (this.$getViewSize().width - 28) / cols;
         this.cols = [col, col, col].join(',');
         this.updateRows();
         setTimeout(() => {

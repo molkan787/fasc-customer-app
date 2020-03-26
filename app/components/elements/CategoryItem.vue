@@ -1,5 +1,5 @@
 <template>
-    <Ripple class="root" :class="{ expand }" :width="expand ? '30%' : '140'" @tap="tap">
+    <Ripple class="root" :class="{ expand }" :width="expand ? '46%' : '160'" @tap="tap">
         <AbsoluteLayout>
                 <label :text="data.name"/>
                 <Image :src="data.image"/>
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$h: 76;
+$h: 96;
 $lh: 20;
 $pad: 6;
 .root{

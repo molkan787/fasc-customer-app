@@ -11,3 +11,6 @@ platforms
 
 .migration_backup
 .vscode
+
+# output files
+wor-bundle.aab

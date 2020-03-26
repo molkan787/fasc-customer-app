@@ -29,7 +29,7 @@ export default {
 .title{
     font-size: 14;
     margin-bottom: 2 2 0 2;
-    color: #d0d0d0;
+    color: #F36F24;
 }
 .field_input{
     background-color: white;

@@ -1,10 +1,10 @@
 <template>
-    <CardView class="root" :class="qty < 1 ? 'ofs' : ''" radius="32" width="100" height="32" elevation="0" ripple="true" @tap="rootTap"> <!-- qty > 0 ? shadowSize : 0 -->
+    <CardView @tap="rootTap" class="root" :class="qty < 1 ? 'ofs' : ''" radius="32" width="100" height="32" elevation="0" ripple="true"> <!-- qty > 0 ? shadowSize : 0 -->
         <template v-if="qty < 1">
             <label text="OUT OF STOCK" class="ofs" />
         </template>
         <template v-else-if="!value">
-            <label text="ADD" />
+            <label text="ADD" @tap="updateCount(1, true)" />
         </template>
         <GridLayout v-else class="ctrls" rows="auto" columns="*">
             <Image row="0" horizontalAlignment="left" @tap="updateCount(-1)" src="~/assets/icons/minus_white.png" />
@@ -42,7 +42,6 @@ export default {
         },
         rootTap(){
             this.$emit('tap');
-            this.updateCount(1, true);
         },
         updateCount(amt, onlyIfZero){
             if(amt > 0 && this.value >= this.qty) return;

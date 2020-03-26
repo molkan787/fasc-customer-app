@@ -11,21 +11,22 @@
                 <GridLayout rows="*" class="segment" width="100%" height="50%" padding="10">
 
                     <StackLayout row="0" horizontalAlignment="center" verticalAlignment="center" paddingTop="20">
-                        <CardView class="lbtn_parent" radius="44" ripple="true" elevation="0" @tap="langSelected('en')">
+                        <CardView class="lbtn_parent" width="140" radius="44" ripple="true" elevation="0" @tap="langSelected('en')">
                             <StackLayout class="lbtn"
                                 :backgroundColor="lang == 'en' ? '#F36F24' : 'white'" >
                                 <label text="ENGLISH"  width="140" :color="lang == 'en' ? 'white' : '#F36F24'"/>
                             </StackLayout>
                         </CardView>
 
-                        <CardView class="lbtn_parent" radius="44" ripple="true" elevation="0" @tap="langSelected('hi')">
+                        <CardView class="lbtn_parent" width="140" radius="44" ripple="true" elevation="0" @tap="langSelected('hi')">
                             <StackLayout class="lbtn"
                                 :backgroundColor="lang == 'hi' ? '#F36F24' : 'white'" >
                                 <label text="HINDI"  width="140" :color="lang == 'hi' ? 'white' : '#F36F24'"/>
                             </StackLayout>
                         </CardView>
 
-                        <SolidButton @tap="continueTap" text="Continue" />
+                        <SolidButton @tap="continueTap" text="Continue"
+                            class="continueButton" backgroundColor="#F36F24" color="white" radius="6" />
                     </StackLayout>
 
                 </GridLayout>
@@ -77,6 +78,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~/styles/vars';
+.continueButton{
+    margin-top: 48;
+    width: 50%;
+}
 .bg{
     height: 100%;
     width: 100%;

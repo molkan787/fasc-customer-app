@@ -316,14 +316,14 @@ $pad: 8;
 
 .bounce-enter-active {
     animation-name: bounce-in;
-    animation-duration: 0.4s;
+    animation-duration: 0.1s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
 }
 
 .bounce-leave-active {
     animation-name: bounce-in;
-    animation-duration: 0.25s;
+    animation-duration: 0.1s;
     animation-fill-mode: forwards;
     animation-direction: reverse;
     animation-timing-function: ease-in-out;
@@ -332,7 +332,7 @@ $pad: 8;
 @keyframes bounce-in {
     0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.98);
     }
 
     100% {

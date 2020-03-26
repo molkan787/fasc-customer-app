@@ -31,7 +31,7 @@ import VueDevtools from 'nativescript-vue-devtools'
 if(TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
 }
-// foo
+
 Vue.config.silent = true; //(TNS_ENV === 'production')
 
 Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
@@ -40,6 +40,7 @@ Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem);
 Vue.registerElement('Ripple', () => require('nativescript-ripple').Ripple);
 Vue.registerElement('DropDown', () => require("nativescript-drop-down/drop-down").DropDown);
+// Vue.registerElement("FilterableListpicker", () => require("nativescript-filterable-listpicker").FilterableListpicker);
 Vue.registerElement(
   'PullToRefresh',
   () => require('@nstudio/nativescript-pulltorefresh').PullToRefresh
@@ -90,6 +91,7 @@ import Starter from './logic/starter';
 Vue.use(Starter, store);
 
 
+Vue.prototype.$store = store;
 
 new Vue({
   store,

@@ -47,7 +47,8 @@ export default class LiveDataUpdater{
             this.lastUpdateTime = data.time;
             this.patchData(data);
         } catch (error) {
-            
+            console.log('LiveUpdate ERROR')
+            console.error(error)
         }
         this.scheduleCheck();
     }
@@ -80,6 +81,7 @@ export default class LiveDataUpdater{
     }
 
     static _patchProducts(products){
+        if(products.length === 0) return;
         const counts = this.state.cart.counts;
         const mapped = this.state.productsMapped;
         for (let _p of products){

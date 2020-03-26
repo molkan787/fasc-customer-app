@@ -5,7 +5,7 @@
             <!-- <ShadowBar dock="top" size="20" marginBottom="-20" ref="shadow"/> -->
 
             <Spinner dock="bottom" v-if="loading" align :size="60" />
-            <ProductsList dock="bottom" v-else :items="items" @requestRefresh="pullRefresh" />
+            <ProductsList @requestMoreItems="loadMoreItems" dock="bottom" v-else :items="items" @requestRefresh="pullRefresh" />
 
         </DockLayout>
     </page>
@@ -30,94 +30,22 @@ export default {
     computed: mapState(['categoriesMapped']),
     data: () => ({
         loading: false,
+        fetching: false,
         title: '',
         cats: [],
         subs: [],
-        items: [
-            {
-                "product_id": "60",
-                "quantity": "8",
-                "title": "Amulya Dairy Whitner 200 Gm",
-                "price": "80.0000",
-                "spf": "250",
-                "spf_unit": "GM",
-                "discount_amt": "0",
-                "discount_type": "2",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/62baec6a4c187dbfa6fecf8e50db7c83-120x120.jpg",
-            },
-            {
-                "product_id": "58",
-                "quantity": "920",
-                "title": "Cadboury bournvita 800 gm jar",
-                "price": "215.0000",
-                "spf": "0",
-                "spf_unit": "",
-                "discount_amt": "50",
-                "discount_type": "2",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klmjthrf-120x120.jpg",
-            },
-            {
-                "product_id": "55",
-                "quantity": "35",
-                "title": "Agrawals 420 sada papad 500 gm",
-                "price": "115.0000",
-                "spf": "80",
-                "spf_unit": "ML",
-                "discount_amt": "0",
-                "discount_type": "0",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klgdfjhldfh-120x120.png",
-            },
-            {
-                "product_id": "75",
-                "quantity": "35",
-                "title": "Agrawals 420 sada papad 500 gm",
-                "price": "115.0000",
-                "spf": "0",
-                "spf_unit": "",
-                "discount_amt": "0",
-                "discount_type": "0",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klmjthrf-120x120.jpg",
-            },
-            {
-                "product_id": "535",
-                "quantity": "35",
-                "title": "Agrawals 420 sada papad 500 gm",
-                "price": "115.0000",
-                "spf": "0",
-                "spf_unit": "",
-                "discount_amt": "0",
-                "discount_type": "0",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klgdfjhldfh-120x120.png",
-            },
-            {
-                "product_id": "550",
-                "quantity": "35",
-                "title": "Agrawals 420 sada papad 500 gm",
-                "price": "115.0000",
-                "spf": "0",
-                "spf_unit": "",
-                "discount_amt": "0",
-                "discount_type": "0",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klmjthrf-120x120.jpg",
-            },
-            {
-                "product_id": "99",
-                "quantity": "35",
-                "title": "Agrawals 420 sada papad 500 gm",
-                "price": "115.0000",
-                "spf": "0",
-                "spf_unit": "",
-                "discount_amt": "0",
-                "discount_type": "0",
-                "image": "http://169.254.80.80/image/cache/catalog/Products/klgdfjhldfh-120x120.png",
-            }
-        ],
+        items: [],
         subCatId: 0,
         childSubCatId: 0,
     }),
     methods: {
         pullRefresh(callback){
             this.loadItems(true).then(() => callback());
+        },
+        loadMoreItems(){
+            // this.items.length % 20 != 0 means we reached the end
+            if(this.fetching || this.items.length % 20 != 0) return;
+            this.loadItems(true, this.items.length)
         },
         catChanged(arg){
             if(this.subCatId != arg.cat){
@@ -127,17 +55,24 @@ export default {
             this.childSubCatId = arg.sub;
             this.loadItems();
         },
-        async loadItems(skipSpinner){
+        async loadItems(skipSpinner, offset){
             if(!skipSpinner) this.loading = true;
+            this.fetching = true;
             const filters = {
                 cat: this.catId,
                 subcat: this.subCatId || '',
                 child_subcat: this.childSubCatId || '',
+                start: offset || '0',
+                limit: '20'
             }
             
             try {
                 const {items, child_subcat} = await this.$dm.getProducts(filters)
-                this.items = items;
+                if(offset){
+                    this.items = [...this.items, ...items];
+                }else{
+                    this.items = items;
+                }
                 if(child_subcat.length == 0){
                     if(!this.childSubCatId) this.subs = [];
                 }else{
@@ -148,6 +83,7 @@ export default {
                 this.subs = [];
             }
             this.loading = false;
+            this.fetching = false;
         }
     },
     mounted(){

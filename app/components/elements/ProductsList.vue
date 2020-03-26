@@ -1,12 +1,20 @@
 <template>
     <AbsoluteLayout class="root" width="100%" height="100%">
         <PullToRefresh width="100%" height="100%" @refresh="pullRefresh">
-            <ScrollView orientation="vertical" width="100%" height="100%">
+            <ListView ref="listview" v-if="items.length > 0" for="(item, index) in items" width="100%" height="100%">
+                <v-template>
+                    <ProductItem :void="rendered(index)" :data="item" @tap="itemTapped(item)" :showCartTools="showCartTools" />
+                </v-template>
+            </ListView>
+            <ImagePlaceholder v-else height="400" image="icons/package.png" text="Nothing to show here"/>
+
+            <!-- <ScrollView orientation="vertical" width="100%" height="100%">
                 <StackLayout orientation="vertical" :padding="padding">
                     <ProductItem v-for="(item) in items" :key="item.product_id" :data="item" @tap="itemTapped(item)" :showCartTools="showCartTools" />
                     <ImagePlaceholder height="400" v-if="items.length == 0" image="icons/package.png" text="Nothing to show here"/>
                 </StackLayout>
-            </ScrollView>
+            </ScrollView> -->
+
         </PullToRefresh>
     </AbsoluteLayout>
 </template>
@@ -51,10 +59,17 @@ export default {
 
         pullRefresh(args){
             this.$emit('requestRefresh', () => args.object.refreshing = false);
+        },
+
+        rendered(index){
+            if(index >= this.items.length - 10){
+                this.$emit('requestMoreItems');
+            }
         }
     },
     mounted(){
         this.emitIds();
+        this.$refs.listview
     }
 }
 </script>
