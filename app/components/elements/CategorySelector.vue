@@ -1,22 +1,29 @@
 <template>
     <StackLayout orientation="vertical">
-        <ScrollView orientation="horizontal">
+        <TabSelector :items="items" textProp="name" v-model="selectedCat" useAll />
+        <TabSelector :items="subs" textProp="name" v-model="selectedSubCat" useAll v-show="subs.length" />
+        <!-- <ScrollView orientation="horizontal">
             <SegmentedBar class="con" v-model="selectedCat">
                 <SegmentedBarItem title="All" class="item"/>
-                <SegmentedBarItem v-for="item in items" :key="item.category_id" :title="item.name" class="item"/>
+                <SegmentedBarItem v-for="item in items" :key="item.category_id" :title="item.name"
+                    class="item"/>
             </SegmentedBar>
-        </ScrollView>
-        <ScrollView orientation="horizontal" ref="subcats" v-if="subs.length">
+        </ScrollView> -->
+        <!-- <ScrollView orientation="horizontal" ref="subcats" v-if="subs.length">
             <SegmentedBar class="con" v-model="selectedSubCat">
                 <SegmentedBarItem title="All" class="item"/>
                 <SegmentedBarItem v-for="item in subs" :key="item.category_id" :title="item.name" class="item"/>
             </SegmentedBar>
-        </ScrollView>
+        </ScrollView> -->
     </StackLayout>
 </template>
 
 <script>
+import TabSelector from '../templates/TabSelector'
 export default {
+    components: {
+        TabSelector
+    },
     props: {
         items: {
             type: Array,
@@ -28,18 +35,18 @@ export default {
         }
     },
     data: () => ({
-        selectedCat: 0,
-        selectedSubCat: 0,
+        selectedCat: -1,
+        selectedSubCat: -1,
     }),
     methods: {
         catsChanged(resetSubs){
-            if(resetSubs && this.selectedSubCat != 0){
-                this.selectedSubCat = 0;
+            if(resetSubs && this.selectedSubCat != -1){
+                this.selectedSubCat = -1;
                 return;
             }
             this.$emit('changed', {
-                cat: (this.selectedCat == 0) ? 0 : this.items[this.selectedCat-1].category_id,
-                sub: (this.selectedSubCat == 0) ? 0 : this.subs[this.selectedSubCat-1].category_id,
+                cat: (this.selectedCat == -1) ? 0 : this.items[this.selectedCat].category_id,
+                sub: (this.selectedSubCat == -1) ? 0 : this.subs[this.selectedSubCat].category_id,
             });
         }
     },
@@ -47,7 +54,7 @@ export default {
         selectedCat(){
             this.catsChanged(true);
         },
-        selectedSubCat(newVal){
+        selectedSubCat(){
             this.catsChanged();
         }
     },

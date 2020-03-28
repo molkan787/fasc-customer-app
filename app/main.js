@@ -32,7 +32,7 @@ if(TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
 }
 
-Vue.config.silent = true; //(TNS_ENV === 'production')
+Vue.config.silent = (TNS_ENV === 'production')
 
 Vue.registerElement('RadSideDrawer', () => require('nativescript-ui-sidedrawer').RadSideDrawer)
 Vue.registerElement('CardView', () => require('nativescript-cardview').CardView);
